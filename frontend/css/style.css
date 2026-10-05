@@ -1,0 +1,879 @@
+:root {
+    --green: #1f9d4c;
+    --green-dark: #168642;
+    --green-light: #eaf8ef;
+
+    --navy: #071d3a;
+
+    --text: #1f2937;
+    --muted: #6b7280;
+
+    --border: #cfd5dc;
+
+    --error: #c62828;
+
+    --white: #ffffff;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body {
+    min-height: 100vh;
+    color: var(--text);
+    background: white;
+    overflow-x: hidden;
+}
+
+
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar {
+    height: 64px;
+    background: var(--green);
+    color: white;
+}
+
+
+.topbar-content {
+    width: min(1040px, calc(100% - 48px));
+
+    height: 100%;
+
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.logo {
+    width: 108px;
+    max-height: 54px;
+
+    object-fit: contain;
+}
+
+
+.system-name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+
+/* =========================
+   MAIN
+========================= */
+
+.page {
+    width: min(1040px, calc(100% - 48px));
+
+    min-height: calc(100vh - 112px);
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: 1fr 490px;
+
+    gap: 58px;
+
+    align-items: center;
+
+    padding: 32px 0 42px;
+}
+
+
+
+/* =========================
+   INTRO
+========================= */
+
+.intro {
+    position: relative;
+
+    align-self: stretch;
+
+    min-height: 620px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+.intro-content {
+    position: relative;
+
+    z-index: 3;
+
+    padding-bottom: 170px;
+}
+
+
+.intro h1 {
+    color: var(--navy);
+
+    font-size: clamp(38px, 4vw, 48px);
+
+    line-height: 1.08;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 18px;
+}
+
+
+.intro-description {
+    color: #5c6572;
+
+    font-size: 18px;
+
+    line-height: 1.45;
+
+    margin-bottom: 28px;
+}
+
+
+
+/* =========================
+   BENEFÍCIOS
+========================= */
+
+.benefits {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+.benefit {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    color: #354052;
+
+    font-size: 14px;
+
+    line-height: 1.25;
+
+    font-weight: 600;
+}
+
+
+.benefit-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #e4f7eb;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 22px;
+}
+
+
+
+/* =========================
+   ILUSTRAÇÃO
+========================= */
+
+.campus-illustration {
+    position: absolute;
+
+    left: -90px;
+    right: -70px;
+
+    bottom: -42px;
+
+    height: 270px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #e7f7ed 0 70%,
+            #cfeeda 70% 100%
+        );
+
+    overflow: hidden;
+}
+
+
+.sun {
+    position: absolute;
+
+    left: 30px;
+    top: 30px;
+
+    width: 125px;
+    height: 125px;
+
+    border-radius: 50%;
+
+    background: #edf9f1;
+}
+
+
+.cloud {
+    position: absolute;
+
+    width: 120px;
+    height: 24px;
+
+    background: #d7f1df;
+
+    border-radius: 30px;
+}
+
+
+.cloud-1 {
+    left: 5%;
+    top: 125px;
+}
+
+
+.cloud-2 {
+    right: 6%;
+    top: 76px;
+
+    transform: scale(.75);
+}
+
+
+.building {
+    position: absolute;
+
+    left: 33%;
+    bottom: 0;
+
+    width: 300px;
+    height: 150px;
+
+    background: #d9e6e2;
+
+    clip-path: polygon(
+        0 28%,
+        66% 0,
+        100% 19%,
+        100% 100%,
+        0 100%
+    );
+}
+
+
+.building::before {
+    content: "";
+
+    position: absolute;
+
+    left: 20px;
+    top: 55px;
+
+    width: 200px;
+    height: 62px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #a8c8bd 0 17px,
+            #eef8f3 17px 24px
+        );
+}
+
+
+.building-sign {
+    position: absolute;
+
+    z-index: 2;
+
+    right: 24px;
+    top: 50px;
+
+    color: #42554f;
+
+    font-size: 9px;
+
+    line-height: 1.2;
+
+    font-weight: 700;
+}
+
+
+
+/* =========================
+   CARD
+========================= */
+
+.login-card {
+    width: 100%;
+
+    padding: 29px 35px 30px;
+
+    border-radius: 13px;
+
+    background: rgba(255,255,255,.98);
+
+    box-shadow:
+        0 12px 38px rgba(20,38,55,.12);
+}
+
+
+.card-heading {
+    text-align: center;
+
+    margin-bottom: 14px;
+}
+
+
+.card-heading h2 {
+    color: var(--navy);
+
+    font-size: 27px;
+
+    line-height: 1.15;
+
+    margin-bottom: 7px;
+}
+
+
+.card-heading p {
+    color: #747b85;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+
+
+/* =========================
+   FOTO
+========================= */
+
+.photo-section {
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+
+.photo-preview {
+    width: 124px;
+    height: 124px;
+
+    margin: 0 auto 8px;
+
+    border: 1.5px dashed #a9b8b1;
+
+    border-radius: 50%;
+
+    background: #edf9f1;
+
+    display: grid;
+
+    place-items: center;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.photo-preview:hover {
+    border-color: var(--green);
+
+    transform: translateY(-1px);
+}
+
+
+.photo-placeholder {
+    font-size: 42px;
+}
+
+
+#previewImage {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.photo-section strong {
+    display: block;
+
+    color: #16243a;
+
+    font-size: 15px;
+
+    margin-bottom: 3px;
+}
+
+
+.photo-section > span {
+    display: block;
+
+    color: #858b95;
+
+    font-size: 12px;
+}
+
+
+
+/* BOTÕES DA FOTO */
+
+.photo-actions {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 9px;
+}
+
+
+.photo-button {
+    border: 1px solid #cddbd3;
+
+    background: white;
+
+    color: var(--green-dark);
+
+    border-radius: 7px;
+
+    padding: 7px 13px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.photo-button:hover {
+    background: var(--green-light);
+}
+
+
+.remove-photo {
+    border: none;
+
+    background: transparent;
+
+    color: var(--error);
+
+    font-size: 11px;
+
+    margin-top: 5px;
+
+    cursor: pointer;
+
+    text-decoration: underline;
+}
+
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+    margin-bottom: 13px;
+}
+
+
+.form-group label {
+    display: block;
+
+    color: #202936;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+
+.input-wrapper {
+    height: 39px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 11px;
+
+    background: white;
+
+    transition: .2s;
+}
+
+
+.input-wrapper:focus-within {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 3px rgba(31,157,76,.09);
+}
+
+
+.input-icon {
+    margin-right: 10px;
+
+    font-size: 17px;
+}
+
+
+.input-wrapper input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    font-size: 13px;
+}
+
+
+.field-error {
+    display: block;
+
+    color: var(--error);
+
+    font-size: 11px;
+
+    margin-top: 4px;
+}
+
+
+
+/* =========================
+   AVISO
+========================= */
+
+.privacy-note {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    padding: 9px 11px;
+
+    margin: 2px 0 14px;
+
+    border-radius: 5px;
+
+    background: #eaf8f0;
+
+    color: #557063;
+
+    font-size: 11px;
+
+    line-height: 1.35;
+}
+
+
+.info-icon {
+    font-size: 17px;
+
+    color: var(--green-dark);
+
+    flex-shrink: 0;
+}
+
+
+
+/* =========================
+   CONTINUAR
+========================= */
+
+.continue-button {
+    width: 100%;
+
+    height: 44px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: var(--green);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.continue-button:hover {
+    background: var(--green-dark);
+
+    transform: translateY(-1px);
+}
+
+
+.form-message {
+    text-align: center;
+
+    color: var(--green-dark);
+
+    font-size: 12px;
+
+    margin-top: 9px;
+}
+
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    height: 48px;
+
+    background: var(--green);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: .4px;
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 720px) {
+
+    .topbar {
+        height: 58px;
+    }
+
+
+    .topbar-content {
+        width: calc(100% - 30px);
+    }
+
+
+    .logo {
+        width: 88px;
+    }
+
+
+    .system-name {
+        font-size: 13px;
+    }
+
+
+    .page {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        padding: 0;
+    }
+
+
+    /*
+       No celular o formulário
+       aparece primeiro.
+    */
+
+    .login-area {
+        order: 1;
+
+        width: 100%;
+
+        padding: 22px 15px 26px;
+
+        background:
+            radial-gradient(
+                circle at 0 0,
+                #e8f7ee 0 100px,
+                transparent 101px
+            ),
+            white;
+    }
+
+
+    .login-card {
+        padding: 23px 18px 22px;
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 7px 25px rgba(20,38,55,.1);
+    }
+
+
+    .card-heading h2 {
+        font-size: 24px;
+    }
+
+
+    .desktop-only {
+        display: none;
+    }
+
+
+    .photo-preview {
+        width: 118px;
+        height: 118px;
+    }
+
+
+    .photo-button {
+        padding: 8px 14px;
+    }
+
+
+    /*
+       Conteúdo institucional
+       vem depois do formulário.
+    */
+
+    .intro {
+        order: 2;
+
+        width: 100%;
+
+        min-height: 405px;
+
+        padding: 38px 24px 0;
+
+        background: #f5fbf7;
+
+        align-items: flex-start;
+    }
+
+
+    .intro-content {
+        padding-bottom: 180px;
+    }
+
+
+    .intro h1 {
+        font-size: 31px;
+
+        letter-spacing: -1px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .intro-description {
+        font-size: 15px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .benefits {
+        gap: 11px;
+    }
+
+
+    .benefit {
+        font-size: 13px;
+    }
+
+
+    .benefit-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .campus-illustration {
+        left: -45px;
+        right: -45px;
+
+        bottom: 0;
+
+        height: 160px;
+    }
+
+
+    .building {
+        left: 25%;
+
+        width: 260px;
+
+        height: 110px;
+    }
+
+
+    footer {
+        height: 45px;
+
+        font-size: 9px;
+    }
+}

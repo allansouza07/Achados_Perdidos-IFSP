@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Sistema de Achados e Perdidos do IFSP"
+    >
+
+    <title>Achados e Perdidos | IFSP</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="topbar-content">
+
+        <img
+            src="../img/logo_ifsp.jfif"
+            alt="Instituto Federal de São Paulo"
+            class="logo"
+        >
+
+        <span class="system-name">
+            Achados e Perdidos
+        </span>
+
+    </div>
+
+</header>
+
+
+<main class="page">
+
+    <!-- LADO ESQUERDO -->
+    <section class="intro">
+
+        <div class="intro-content">
+
+            <h1>
+                Achados e Perdidos<br>
+                do IFSP
+            </h1>
+
+            <p class="intro-description">
+                Um sistema para facilitar a localização<br class="desktop-only">
+                e a devolução de objetos encontrados<br class="desktop-only">
+                na instituição.
+            </p>
+
+
+            <div class="benefits">
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        🔎
+                    </span>
+
+                    <span>
+                        Encontre
+                        objetos perdidos
+                    </span>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        📦
+                    </span>
+
+                    <span>
+                        Cadastre
+                        objetos encontrados
+                    </span>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        👥
+                    </span>
+
+                    <span>
+                        Ajude os alunos do IFSP
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        
+                <div class="building-sign">
+                    INSTITUTO FEDERAL<br>
+                    <small>São Paulo</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FORMULÁRIO -->
+    <section class="login-area">
+
+        <div class="login-card">
+
+            <div class="card-heading">
+
+                <h2>
+                    Identifique-se para começar
+                </h2>
+
+                <p>
+                    Preencha suas informações para utilizar o sistema<br class="desktop-only">
+                    de Achados e Perdidos do IFSP.
+                </p>
+
+            </div>
+
+
+            <form id="loginForm">
+
+
+                <!-- FOTO -->
+                <div class="photo-section">
+
+                    <div
+                        class="photo-preview"
+                        id="photoPreview"
+                    >
+
+                        <div
+                            class="photo-placeholder"
+                            id="photoPlaceholder"
+                        >
+                            📷
+                        </div>
+
+                        <img
+                            id="previewImage"
+                            alt="Pré-visualização da foto"
+                            hidden
+                        >
+
+                    </div>
+
+
+                    <strong id="photoTitle">
+                        Adicione sua foto
+                    </strong>
+
+                    <span id="photoHint">
+                        Escolha uma imagem da galeria ou tire uma foto
+                    </span>
+
+
+                    <div class="photo-actions">
+
+                        <!-- GALERIA -->
+                        <button
+                            type="button"
+                            class="photo-button"
+                            id="galleryButton"
+                        >
+                            📁 Galeria
+                        </button>
+
+
+                        <!-- CÂMERA -->
+                        <button
+                            type="button"
+                            class="photo-button"
+                            id="cameraButton"
+                        >
+                            📷 Câmera
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="remove-photo"
+                        id="removePhoto"
+                        hidden
+                    >
+                        Remover foto
+                    </button>
+
+
+                    <!-- Input da galeria -->
+                    <input
+                        type="file"
+                        id="galleryInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+
+                    <!-- Input da câmera -->
+                    <input
+                        type="file"
+                        id="cameraInput"
+                        accept="image/*"
+                        capture="user"
+                        hidden
+                    >
+
+
+                    <small
+                        class="field-error"
+                        id="photoError"
+                    ></small>
+
+                </div>
+
+
+
+                <!-- MATRÍCULA -->
+                <div class="form-group">
+
+                    <label for="matricula">
+                        Número de matrícula
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            id="matricula"
+                            name="matricula"
+                            inputmode="numeric"
+                            maxlength="7"
+                            placeholder="Digite seu número de matrícula: (GUxxxxxxx)"
+                        >
+
+                    </div>
+
+                    <small
+                        class="field-error"
+                        id="matriculaError"
+                    ></small>
+
+                </div>
+
+
+
+                <!-- TELEFONE -->
+                <div class="form-group">
+
+                    <label for="telefone">
+                        Número de telefone
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            📞
+                        </span>
+
+                        <input
+                            type="tel"
+                            id="telefone"
+                            name="telefone"
+                            inputmode="tel"
+                            maxlength="15"
+                            placeholder="(11) 99999-9999"
+                        >
+
+                    </div>
+
+                    <small
+                        class="field-error"
+                        id="telefoneError"
+                    ></small>
+
+                </div>
+
+
+
+                <!-- AVISO -->
+                <div class="privacy-note">
+
+                    <span class="info-icon">
+                        ⓘ
+                    </span>
+
+                    <span>
+                        Seu número será utilizado para permitir o contato pelo
+                        WhatsApp quando alguém encontrar ou identificar um
+                        objeto cadastrado por você.
+                    </span>
+
+                </div>
+
+
+
+                <!-- BOTÃO -->
+                <button
+                    type="submit"
+                    class="continue-button"
+                >
+
+                    <span>
+                        CONTINUAR
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+                <p
+                    class="form-message"
+                    id="formMessage"
+                ></p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    SITE FICTÍCIO, CRIADO POR ALLAN DE SOUZA GOMES, DO IFSP
+</footer>
+
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
