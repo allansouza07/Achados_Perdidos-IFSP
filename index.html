@@ -12,6 +12,7 @@
     <title>Achados e Perdidos | IFSP</title>
 
     <link rel="stylesheet" href="frontend/css/style.css">
+    <link rel="shortcut icon" href="img/logo_ifsp.png" type="image/png">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
     <div class="topbar-content">
 
         <img
-            src="img/logo_ifsp.jfif"
+            src="img/logo_ifsp.png"
             alt="Instituto Federal de São Paulo"
             class="logo"
         >
@@ -231,37 +232,48 @@
                 </div>
 
 
+                        <!-- NOME COMPLETO -->
+        <div class="form-group">
+            <label for="nome">Nome completo</label>
 
-                <!-- MATRÍCULA -->
-                <div class="form-group">
+            <div class="input-wrapper">
+                <span class="input-icon">👤</span>
 
-                    <label for="matricula">
-                        Número de matrícula
-                    </label>
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    placeholder="Digite seu nome completo"
+                    autocomplete="name"
+                    maxlength="100"
+                    required
+                >
+            </div>
 
-                    <div class="input-wrapper">
+            <small class="field-error" id="nomeError"></small>
+        </div>
 
-                        <span class="input-icon">
-                            👤
-                        </span>
+        <!-- MATRÍCULA -->
+        <div class="form-group">
+            <label for="matricula">Número de matrícula</label>
 
-                        <input
-                            type="text"
-                            id="matricula"
-                            name="matricula"
-                            inputmode="numeric"
-                            maxlength="7"
-                            placeholder="Digite seu número de matrícula: (GUxxxxxxx)"
-                        >
+            <div class="input-wrapper">
+                <span class="input-icon">🎓</span>
 
-                    </div>
+                <input
+                    type="text"
+                    id="matricula"
+                    name="matricula"
+                    maxlength="9"
+                    placeholder="Digite sua matrícula"
+                    autocomplete="off"
+                    required
+                >
+            </div>
 
-                    <small
-                        class="field-error"
-                        id="matriculaError"
-                    ></small>
-
-                </div>
+            <small class="field-error" id="matriculaError"></small>
+        </div>
+                
 
 
 
@@ -316,20 +328,15 @@
 
 
                 <!-- BOTÃO -->
-                <button
-                    type="submit"
-                    class="continue-button"
-                >
-
-                    <span>
-                        CONTINUAR
-                    </span>
-
-                    <span>
-                        →
-                    </span>
-
-                </button>
+        <button
+            type="button"
+            class="continue-button"
+            id="continueButton"
+            onclick="window.location.href='frontend/pagina_inicial/pagina_inicial.html'"
+        >
+            <span>CONTINUAR</span>
+            <span>→</span>
+        </button>
 
 
                 <p

@@ -7,6 +7,9 @@ const cameraInput = document.getElementById("cameraInput");
 const photoPreview = document.getElementById("photoPreview");
 const previewImage = document.getElementById("previewImage");
 
+const nome = document.getElementById("nome");
+const nomeError = document.getElementById("nomeError");
+
 const photoPlaceholder =
     document.getElementById("photoPlaceholder");
 
@@ -59,6 +62,7 @@ galleryButton.addEventListener("click", () => {
 });
 
 
+
 /* =========================================
    CÂMERA
 ========================================= */
@@ -68,6 +72,7 @@ cameraButton.addEventListener("click", () => {
     cameraInput.click();
 
 });
+
 
 
 /* =========================================
@@ -123,6 +128,8 @@ function handlePhoto(file) {
     }
 
 
+    /* Verifica se é imagem */
+
     if (!file.type.startsWith("image/")) {
 
         photoError.textContent =
@@ -132,7 +139,8 @@ function handlePhoto(file) {
     }
 
 
-    // Limite de 5 MB
+    /* Limite de 5 MB */
+
     const maxSize = 5 * 1024 * 1024;
 
 
@@ -145,11 +153,15 @@ function handlePhoto(file) {
     }
 
 
+    /* Guarda a foto */
+
     selectedPhoto = file;
 
 
     photoError.textContent = "";
 
+
+    /* Cria preview */
 
     const objectUrl =
         URL.createObjectURL(file);
@@ -162,6 +174,8 @@ function handlePhoto(file) {
     photoPlaceholder.hidden = true;
 
 
+    /* Atualiza textos */
+
     photoTitle.textContent =
         "Foto selecionada";
 
@@ -169,6 +183,8 @@ function handlePhoto(file) {
     photoHint.textContent =
         file.name;
 
+
+    /* Mostra botão remover */
 
     removePhoto.hidden = false;
 
@@ -224,21 +240,14 @@ function clearPhoto() {
    MATRÍCULA
 ========================================= */
 
-matricula.addEventListener(
-    "input",
-    () => {
+matricula.addEventListener("input", () => {
+    matricula.value = matricula.value
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .slice(0, 9)
+        .toUpperCase();
 
-        matricula.value =
-            matricula.value
-                .replace(/\D/g, "")
-                .slice(0, 9);
-
-
-        matriculaError.textContent = "";
-
-    }
-);
-
+    matriculaError.textContent = "";
+});
 
 
 /* =========================================
@@ -255,6 +264,8 @@ telefone.addEventListener(
                 .slice(0, 11);
 
 
+        /* Até 2 números */
+
         if (value.length <= 2) {
 
             telefone.value =
@@ -264,12 +275,18 @@ telefone.addEventListener(
 
         }
 
+
+        /* DDD + telefone */
+
         else if (value.length <= 7) {
 
             telefone.value =
                 `(${value.slice(0, 2)}) ${value.slice(2)}`;
 
         }
+
+
+        /* Telefone completo */
 
         else {
 
@@ -287,15 +304,17 @@ telefone.addEventListener(
 
 
 /* =========================================
-   ENVIO
+   ENVIO PARA O FLASK
 ========================================= */
 
 loginForm.addEventListener(
     "submit",
-    function (event) {
+    async function (event) {
 
         event.preventDefault();
 
+
+        /* Limpa mensagem anterior */
 
         formMessage.textContent = "";
 
@@ -304,7 +323,9 @@ loginForm.addEventListener(
 
 
 
-        /* FOTO */
+        /* ==============================
+           FOTO
+        ============================== */
 
         if (!selectedPhoto) {
 
@@ -317,7 +338,9 @@ loginForm.addEventListener(
 
 
 
-        /* MATRÍCULA */
+        /* ==============================
+           MATRÍCULA
+        ============================== */
 
         const matriculaValue =
             matricula.value.replace(/\D/g, "");
@@ -334,7 +357,9 @@ loginForm.addEventListener(
 
 
 
-        /* TELEFONE */
+        /* ==============================
+           TELEFONE
+        ============================== */
 
         const phoneValue =
             telefone.value.replace(/\D/g, "");
@@ -354,6 +379,10 @@ loginForm.addEventListener(
 
 
 
+        /* ==============================
+           INTERROMPE SE HOUVER ERRO
+        ============================== */
+
         if (!valid) {
 
             return;
@@ -362,25 +391,30 @@ loginForm.addEventListener(
 
 
 
-        /*
-        ========================================
-        PRÓXIMA ETAPA
+        /* ==============================
+           PREPARA OS DADOS
+        ============================== */
+        const nomeValue = nome.value.trim();
 
-        Aqui vamos conectar com o Flask.
+        if (nomeValue.length < 2) {
+            nomeError.textContent = "Digite seu nome completo.";
+            valid = false;
+}
+        const formData =
+            new FormData();
 
-        Exemplo:
-
-        const formData = new FormData();
 
         formData.append(
             "matricula",
             matriculaValue
         );
 
+
         formData.append(
             "telefone",
             phoneValue
         );
+
 
         formData.append(
             "foto",
@@ -388,20 +422,162 @@ loginForm.addEventListener(
         );
 
 
-        fetch(
-            "http://127.0.0.1:5000/usuarios",
-            {
-                method: "POST",
-                body: formData
-            }
-        );
+        formData.append("nome", nomeValue);
+        /* ==============================
+           BOTÃO
+        ============================== */
 
-        ========================================
-        */
+        const button =
+            loginForm.querySelector(
+                ".continue-button"
+            );
+
+
+        const originalButtonText =
+            button.innerHTML;
+
+
+        button.disabled = true;
+
+
+        button.innerHTML =
+            "<span>ENVIANDO...</span>";
 
 
         formMessage.textContent =
-            "Dados preenchidos!";
+            "Identificando usuário...";
+        window.location.href = "pagina_inicial.html";
+
+
+
+        try {
+
+
+            /* ==============================
+               ENVIA PARA O FLASK
+            ============================== */
+            window.location.href = "pagina_inicial/pagina_inicial.html";
+            const response =
+                await fetch(
+                    "http://127.0.0.1:5000/api/usuarios/identificar",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+
+            /* ==============================
+               CONVERTE RESPOSTA
+            ============================== */
+
+            const responseText =
+    await response.text();
+
+console.log("STATUS:", response.status);
+console.log("RESPOSTA DO FLASK:", responseText);
+
+let data;
+
+try {
+
+    data = JSON.parse(responseText);
+
+} catch (error) {
+
+    throw new Error(
+        "O Flask não retornou JSON. Veja a resposta no Console (F12)."
+    );
+
+}
+
+
+
+            /* ==============================
+               VERIFICA ERRO DA API
+            ============================== */
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.mensagem ||
+                    "Não foi possível identificar o usuário."
+                );
+
+            }
+
+
+
+            /* ==============================
+               SUCESSO
+            ============================== */
+
+            console.log(
+                "Usuário identificado:",
+                data.usuario
+            );
+
+
+            formMessage.textContent =
+                `Olá, ${data.usuario.nome}! Usuário identificado com sucesso.`;
+
+
+
+            /* ==============================
+               SALVA USUÁRIO NO NAVEGADOR
+            ============================== */
+
+            localStorage.setItem(
+                "usuario",
+                JSON.stringify(data.usuario)
+            );
+
+
+            /*
+             * Por enquanto permanecemos
+             * nessa tela.
+             *
+             * Na próxima etapa vamos
+             * redirecionar para a página
+             * principal do sistema.
+             */
+
+
+        }
+
+
+        /* ==============================
+           ERRO
+        ============================== */
+
+        catch (error) {
+
+            console.error(
+                "Erro:",
+                error
+            );
+
+
+            formMessage.textContent =
+                error.message ||
+                "Erro ao conectar com o servidor.";
+
+        }
+
+
+        /* ==============================
+           RESTAURA BOTÃO
+        ============================== */
+
+        finally {
+
+            button.disabled = false;
+
+            button.innerHTML =
+                originalButtonText;
+
+        }
 
     }
 );
