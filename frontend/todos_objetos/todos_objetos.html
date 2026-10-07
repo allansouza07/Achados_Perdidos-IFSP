@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Todos os objetos - Achados e Perdidos</title>
+
+    <link rel="stylesheet" href="css/todos_objetos.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         CABEÇALHO
+    ========================================== -->
+
+    <header class="topbar">
+
+        <div class="nav-container">
+
+            <!-- LOGO IFSP -->
+            <a class="brand" href="../pagina_inicial/pagina_inicial.html">
+
+                <div class="ifsp-mark">
+                    <span class="dot"></span>
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="brand-text">
+                    <strong>
+                        INSTITUTO<br>
+                        FEDERAL
+                    </strong>
+
+                    <small>São Paulo</small>
+                </div>
+
+            </a>
+
+
+            <!-- MENU -->
+            <nav class="desktop-nav">
+
+                <a href="../pagina_inicial/pagina_inicial.html">
+                    Início
+                </a>
+
+                
+
+                <a href="../pagina_inicial/pagina_inicial.html#sobre">
+                    Sobre
+                </a>
+
+            </nav>
+
+
+            <!-- AÇÕES -->
+            <div class="nav-actions">
+
+                <button class="icon-button">
+                    ⌕
+                </button>
+
+                <button class="notification">
+                    ♧
+                    <span>3</span>
+                </button>
+
+                <button class="profile">
+
+                    <div class="avatar">
+                        A
+                    </div>
+
+                    <span>
+                        Allan de Souza
+                    </span>
+
+                    <b>⌄</b>
+
+                </button>
+
+                <button class="menu-button">
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         CONTEÚDO
+    ========================================== -->
+
+    <main class="container">
+
+        <section class="page-header">
+
+            <div>
+
+                <span class="breadcrumb">
+                    Início / Objetos
+                </span>
+
+                <h1>
+                    Todos os objetos encontrados
+                </h1>
+
+                <p>
+                    Confira todos os objetos encontrados
+                    recentemente no campus.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PESQUISA E FILTROS
+        ====================================== -->
+
+        <section class="filters">
+
+            <div class="search">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Pesquisar objeto..."
+                >
+
+            </div>
+
+
+            <select id="categoryFilter">
+
+                <option value="todos">
+                    Todas as categorias
+                </option>
+
+                <option value="vestuario">
+                    Vestuário
+                </option>
+
+                <option value="eletronico">
+                    Eletrônico
+                </option>
+
+                <option value="item-pessoal">
+                    Item pessoal
+                </option>
+
+            </select>
+
+
+            <select id="locationFilter">
+
+                <option value="todos">
+                    Todos os locais
+                </option>
+
+                <option value="biblioteca">
+                    Biblioteca
+                </option>
+
+                <option value="sala">
+                    Sala
+                </option>
+
+                <option value="laboratorio">
+                    Laboratório
+                </option>
+
+                <option value="patio">
+                    Pátio
+                </option>
+
+                <option value="cantina">
+                    Cantina
+                </option>
+
+            </select>
+
+        </section>
+
+
+        <!-- CONTADOR -->
+
+        <div class="result-info">
+
+            <strong id="resultCount">
+                6 objetos encontrados
+            </strong>
+
+            <span>
+                Mais recentes primeiro
+            </span>
+
+        </div>
+
+
+        <!-- =====================================
+             OBJETOS
+        ====================================== -->
+
+        <section class="objects-grid" id="objectsGrid">
+
+
+            <!-- =================================
+                 1 - ESTOJO
+            ================================== -->
+
+            <article
+                class="object-card"
+                data-name="estojo azul"
+                data-category="item-pessoal"
+                data-location="biblioteca">
+
+                <div class="image-container">
+
+                    <img class="imagem" src="https://scontent.fcgh37-1.fna.fbcdn.net/v/t69.46293-2/841098629_1108242774910181_2724942143060694077_n.?stp=dst-jpg_s960x960_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=942482&_nc_ohc=OYJ0yPEfRF4Q7kNvwH9Dl2c&_nc_oc=AdoakllR3jzYfLJLSTpqoHbu-JDTBDtuGcW_kXrdnD449rtTUtO7_TkAUVJI20koiwo7i8HQ4JwaToFUFmM5xfAS&_nc_zt=28&_nc_ht=scontent.fcgh37-1.fna&_nc_gid=Iyatvmv08Sp5N3LjiK3www&_nc_ss=7b6a8&oh=03_Q7cD6gHwNfHLNPgDwS3uA2sGju8DVKLGZqmoxtk738znFaNWDg&oe=6AC87773"></img>
+
+                    <span class="status">
+                        Encontrado
+                    </span>
+
+                </div>
+
+
+                <div class="object-content">
+
+                    <h2>
+                        Estojo azul
+                    </h2>
+
+                    <p>
+                        <strong>📅</strong>
+                        07/10/2026
+                    </p>
+
+                    <p>
+                        <strong>📍</strong>
+                        Biblioteca
+                    </p>
+
+                    <p>
+                        <strong>👤</strong>
+                        Postado por: @GU3079689
+                    </p>
+
+                    <button class="details-btn">
+                        Ver detalhes →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================
+                 2 - GARRAFA
+            ================================== -->
+
+            <article
+                class="object-card"
+                data-name="garrafa preta"
+                data-category="item-pessoal"
+                data-location="sala">
+
+                <div class="image-container">
+
+                    <img class="imagem" src="https://scontent.fcgh11-1.fna.fbcdn.net/v/t1.15752-9/840286697_1402896988661964_6352228124059066905_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_ohc=jZ_L71jd9_8Q7kNvwGkiWud&_nc_oc=Adr9oScv1HfU5FAppn44_OlLxbbcyT_5cbkSMRbH0X79FHUKZFD9OjUplplC9NlGkb8s3nzd3tvHZeHIabmRFe7B&_nc_zt=23&_nc_ht=scontent.fcgh11-1.fna&_nc_ss=7b6a8&oh=03_Q7cD6gH_OCeJubcmuR3cRQCBlVJ17RDO6DQ-y_c6WgiBbNIl8A&oe=6AEDF5AA"></img>
+
+                    <span class="status">
+                        Encontrado
+                    </span>
+
+                </div>
+
+
+                <div class="object-content">
+
+                    <h2>
+                        Garrafa preta
+                    </h2>
+
+                    <p>
+                        <strong>📅</strong>
+                        06/10/2026
+                    </p>
+
+                    <p>
+                        <strong>📍</strong>
+                        Sala F1
+                    </p>
+
+                    <p>
+                        <strong>👤</strong>
+                        Postado por: @GU3079689
+                    </p>
+
+                    <button class="details-btn">
+                        Ver detalhes →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================
+                 3 - FONE JBL
+            ================================== -->
+
+            <article
+                class="object-card"
+                data-name="fone de ouvido jbl"
+                data-category="eletronico"
+                data-location="laboratorio">
+
+                <div class="image-container">
+
+                    <img class="imagem" src="https://scontent.fcgh11-1.fna.fbcdn.net/v/t1.15752-9/836981690_1597218128199455_3420088190159640495_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_ohc=XbTriwHf96sQ7kNvwFeedQN&_nc_oc=AdqTySAA9NfDQGGCRN1SjbTGySJOavRuvLDWfehLxkjRe_brqJ19qIQ2ejMWHC0m1TyCpY8pETcrqp7x0c0V4Umc&_nc_zt=23&_nc_ht=scontent.fcgh11-1.fna&_nc_ss=7b6a8&oh=03_Q7cD6gEizcD0mOJx1Zv7ytG5f4glWU3ySRVasYPacugrW6IdLw&oe=6AEDFC22"></img>
+
+                    <span class="status">
+                        Encontrado
+                    </span>
+
+                </div>
+
+
+                <div class="object-content">
+
+                    <h2>
+                        Fone de ouvido JBL
+                    </h2>
+
+                    <p>
+                        <strong>📅</strong>
+                        05/10/2026
+                    </p>
+
+                    <p>
+                        <strong>📍</strong>
+                        Laboratório de Informática
+                    </p>
+
+                    <p>
+                        <strong>👤</strong>
+                        Postado por: @3079689
+                    </p>
+
+                    <button class="details-btn">
+                        Ver detalhes →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================
+                 4 - MOCHILA
+            ================================== -->
+
+            <article
+                class="object-card"
+                data-name="mochila preta"
+                data-category="item-pessoal"
+                data-location="patio">
+
+                <div class="image-container">
+
+                    <div class="object-image mochila">
+                        🎒
+                    </div>
+
+                    <span class="status">
+                        Encontrado
+                    </span>
+
+                </div>
+
+
+                <div class="object-content">
+
+                    <h2>
+                        Mochila preta
+                    </h2>
+
+                    <p>
+                        <strong>📅</strong>
+                        04/10/2026
+                    </p>
+
+                    <p>
+                        <strong>📍</strong>
+                        Pátio
+                    </p>
+
+                    <p>
+                        <strong>👤</strong>
+                        Postado por: @GU304521
+                    </p>
+
+                    <button class="details-btn">
+                        Ver detalhes →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================
+                 5 - CASACO
+            ================================== -->
+
+            <article
+                class="object-card"
+                data-name="casaco azul"
+                data-category="vestuario"
+                data-location="cantina">
+
+                <div class="image-container">
+
+                    <div class="object-image casaco">
+                        🧥
+                    </div>
+
+                    <span class="status">
+                        Encontrado
+                    </span>
+
+                </div>
+
+
+                <div class="object-content">
+
+                    <h2>
+                        Casaco azul
+                    </h2>
+
+                    <p>
+                        <strong>📅</strong>
+                        03/10/2026
+                    </p>
+
+                    <p>
+                        <strong>📍</strong>
+                        Cantina
+                    </p>
+
+                    <p>
+                        <strong>👤</strong>
+                        Postado por: @GU302145
+                    </p>
+
+                    <button class="details-btn">
+                        Ver detalhes →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================
+                 6 - CELULAR
+            ================================== -->
+
+            <article
+                class="object-card"
+                data-name="celular samsung"
+                data-category="eletronico"
+                data-location="biblioteca">
+
+                <div class="image-container">
+
+                    <div class="object-image celular">
+                        📱
+                    </div>
+
+                    <span class="status">
+                        Encontrado
+                    </span>
+
+                </div>
+
+
+                <div class="object-content">
+
+                    <h2>
+                        Celular Samsung
+                    </h2>
+
+                    <p>
+                        <strong>📅</strong>
+                        02/10/2026
+                    </p>
+
+                    <p>
+                        <strong>📍</strong>
+                        Biblioteca
+                    </p>
+
+                    <p>
+                        <strong>👤</strong>
+                        Postado por: @GU301782
+                    </p>
+
+                    <button class="details-btn">
+                        Ver detalhes →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- CASO NÃO ENCONTRE -->
+
+        <div
+            id="noResults"
+            class="no-results">
+
+            <div>
+                🔎
+            </div>
+
+            <h2>
+                Nenhum objeto encontrado
+            </h2>
+
+            <p>
+                Tente pesquisar por outro nome
+                ou alterar os filtros.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================
+         RODAPÉ
+    ========================================== -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div class="brand">
+
+                <div class="ifsp-mark">
+
+                    <span class="dot"></span>
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+                <div class="brand-text">
+
+                    <strong>
+                        INSTITUTO<br>
+                        FEDERAL
+                    </strong>
+
+                    <small>
+                        São Paulo
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <p>
+                Desenvolvido por Allan, estudante de ADS
+                do Instituto Federal de São Paulo.
+            </p>
+
+
+            <nav>
+
+                <a href="../pagina_inicial/pagina_inicial.html">
+                    Início
+                </a>
+
+                <a href="#">
+                    Objetos
+                </a>
+
+                <a href="../pagina_inicial/pagina_inicial.html#sobre">
+                    Sobre
+                </a>
+
+            </nav>
+
+        </div>
+
+    </footer>
+
+
+    <script src="js/todos_objetos.js"></script>
+
+</body>
+
+</html>
