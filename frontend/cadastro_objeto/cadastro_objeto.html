@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Sistema de Achados e Perdidos do IFSP">
+
+    <title>Cadastrar objeto encontrado | Achados e Perdidos IFSP</title>
+
+    <link rel="stylesheet" href="css/cadastro_objeto.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="header-container">
+
+            <a href="#" class="logo-area">
+                <div class="logo-placeholder">
+                    <img src='../../img/logo_ifsp.png' width='50px' height='60px'></img>
+
+                    
+                </div>
+            </a>
+
+            <nav class="main-nav">
+                <a href="../../index.html">INÍCIO</a>
+                <a href="#">SOBRE</a>
+            </nav>
+
+            <div class="header-actions">
+
+                <button class="icon-button" type="button">
+                    <span class="search-icon"></span>
+                </button>
+            
+                <img src='img/avatar_homem_sem_fundo.png' width='30px' height='30px'></img>
+                <img src='img/notificacao.png' width='30px' height='30px'></img>
+
+                
+
+                
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CONTEÚDO ================= -->
+
+    <main class="main-content">
+
+        <a href="#" class="back-link" id="backLink">
+            <span>←</span>
+            Voltar para início
+        </a>
+
+
+        <section class="page-heading">
+
+            <h1>Cadastrar um objeto encontrado</h1>
+
+            <p>
+                Ajude alguém a recuperar um objeto perdido.
+            </p>
+
+        </section>
+
+
+        <!-- ================= FORMULÁRIO ================= -->
+
+        <form id="objectForm" class="object-form" novalidate>
+
+
+            <!-- FOTO -->
+
+            <section class="form-section photo-section">
+
+                <h2>Foto do objeto</h2>
+
+                <label
+                    for="photoInput"
+                    class="photo-upload"
+                    id="photoUpload"
+                >
+
+                    <div class="camera-icon">
+                        ⌾
+                    </div>
+
+                    <strong>
+                        Adicione uma foto
+                    </strong>
+
+                    <span>
+                        Arraste uma imagem ou clique para selecionar
+                    </span>
+
+                    <span class="photo-button">
+                        <span>＋</span>
+                        Adicionar foto
+                    </span>
+
+                </label>
+
+                <input
+                    type="file"
+                    id="photoInput"
+                    name="foto"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                >
+
+                <div
+                    class="photo-preview"
+                    id="photoPreview"
+                ></div>
+
+            </section>
+
+
+            <!-- INFORMAÇÕES -->
+
+            <section class="form-section">
+
+                <h2 id='informacao_objeto'>Informações do objeto</h2>
+
+
+                <div class="form-grid">
+
+
+                    <!-- NOME -->
+
+                    <div class="form-group">
+
+                        <label for="nomeObjeto">
+                            Nome do objeto <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeObjeto"
+                            name="nomeObjeto"
+                            placeholder="Digite aqui o nome do objeto"
+                            maxlength="100"
+                            required
+                        >
+
+                        <small
+                            class="error-message"
+                            id="nomeError"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- CATEGORIA -->
+
+                    <div class="form-group">
+
+                        <label for="categoria">
+                            Categoria <span>*</span>
+                        </label>
+
+                        <select
+                            id="categoria"
+                            name="categoria"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione uma categoria
+                            </option>
+
+                            <option value="vestuario">
+                                Vestuário
+                            </option>
+
+                            <option value="eletronico">
+                                Eletrônico
+                            </option>
+
+                            <option value="item_pessoal">
+                                Item pessoal
+                            </option>
+
+                        </select>
+
+                        <small
+                            class="error-message"
+                            id="categoriaError"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- LOCAL -->
+
+                    <div class="form-group">
+
+                        <label for="local">
+                            Local onde encontrou <span>*</span>
+                        </label>
+
+                        <select
+                            id="local"
+                            name="local"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione o local
+                            </option>
+
+                            <option value="biblioteca">
+                                Biblioteca
+                            </option>
+
+                            <option value="sala_aula">
+                                Sala de aula
+                            </option>
+
+                            <option value="laboratorio">
+                                Laboratório
+                            </option>
+
+                            <option value="patio">
+                                Pátio
+                            </option>
+
+                            <option value="cantina">
+                                Cantina
+                            </option>
+
+                            <option value="quadra">
+                                Quadra
+                            </option>
+
+                            <option value="corredor">
+                                Corredor
+                            </option>
+
+                            <option value="outro">
+                                Outro
+                            </option>
+
+                        </select>
+
+                        <small
+                            class="error-message"
+                            id="localError"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- DATA -->
+
+                    <div class="form-group">
+
+                        <label for="dataEncontrada">
+                            Data encontrada <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dataEncontrada"
+                            name="dataEncontrada"
+                            required
+                        >
+
+                        <small
+                            class="error-message"
+                            id="dataError"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- DESCRIÇÃO -->
+
+                    <div class="form-group full-width">
+
+                        <label for="descricao">
+                            Descrição do objeto <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="descricao"
+                            name="descricao"
+                            maxlength="500"
+                            required
+                            placeholder="Descreva características que possam ajudar o dono a identificar o objeto.
+Ex: cor, marca, tamanho, detalhes específicos..."
+                        ></textarea>
+
+
+                        <div class="textarea-footer">
+
+                            <small
+                                class="error-message"
+                                id="descricaoError"
+                            ></small>
+
+                            <span id="charCounter">
+                                0/500
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AVISO -->
+
+                <div class="security-warning">
+
+                    <span class="info-icon">
+                        i
+                    </span>
+
+                    <p>
+                        Não informe características muito específicas
+                        que possam facilitar falsas solicitações de recuperação.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- BOTÕES -->
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="cancelButton"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Cadastrar objeto
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        SITE CRIADO POR ESTUDANTES DO INSTITUTO FEDERAL
+
+    </footer>
+
+
+    <script src="js/cadastro_objeto.js"></script>
+
+</body>
+
+</html>

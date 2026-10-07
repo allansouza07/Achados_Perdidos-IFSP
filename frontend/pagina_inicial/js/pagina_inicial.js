@@ -68,10 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 ) {
 
-                    alert(
-                        "Aqui será aberta a tela de cadastro de objeto."
-                    );
-
+                  
                 }
 
             }
