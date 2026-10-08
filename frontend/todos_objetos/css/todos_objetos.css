@@ -43,6 +43,25 @@ a {
 /* =========================================
    CABEÇALHO
 ========================================= */
+/* barra de rolagem */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #8ae08a;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #11a03c;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #187236;
+}
 
 .topbar {
     background: linear-gradient(

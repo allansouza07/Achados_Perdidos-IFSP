@@ -47,7 +47,81 @@ body {
     background: white;
 
 }
+.brand {
 
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.ifsp-mark {
+
+    width: 35px;
+
+    height: 35px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 9px);
+
+    grid-auto-rows: 9px;
+
+    gap: 2px;
+
+    position: relative;
+}
+
+
+.ifsp-mark span {
+
+    display: block;
+
+    background: #79d52d;
+}
+
+
+.ifsp-mark .dot {
+
+    position: absolute;
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #ed1c24;
+
+    top: -3px;
+
+    left: 3px;
+}
+
+/* barra de rolagem */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #8ae08a;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #11a03c;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #187236;
+}
 
 /* ================= HEADER ================= */
 
