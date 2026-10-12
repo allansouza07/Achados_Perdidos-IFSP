@@ -1236,7 +1236,7 @@ footer {
         width:
             min(
                 100% - 24px,
-                620px
+                620px 
             );
     }
 
@@ -1257,14 +1257,10 @@ footer {
     }
 
 
-    .desktop-nav,
-    .profile span,
-    .profile b,
-    .icon-button {
-
-        display: none;
+    
+    #objetos{
+        display:none;
     }
-
 
     .menu-button {
 
