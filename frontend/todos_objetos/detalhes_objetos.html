@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalhes do objeto | Achados e Perdidos IFSP</title>
+
+    <link rel="stylesheet" href="css/detalhes_objetos.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="cabecalho-conteudo">
+
+            <a href="../index.html" class="logo">
+                <img src="../assets/logo-ifsp.png"
+                     alt="Instituto Federal de São Paulo">
+            </a>
+
+            <nav class="menu">
+                <a href="../pagina_inicial/pagina_inicial.html">INÍCIO</a>
+                <a href="../sobre/sobre.html">SOBRE</a>
+            </nav>
+
+            <div class="acoes-header">
+                <button class="icone-header" aria-label="Pesquisar"
+                        onclick="window.location.href='../objetos/objetos.html'">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+
+                <a href="../perfil/perfil.html" class="perfil">
+                    <i class="fa-solid fa-circle-user"></i>
+                </a>
+
+                <button class="icone-header" aria-label="Notificações">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="container">
+
+        <a href="../todos_objetos/todos_objetos.html" class="voltar">
+            <i class="fa-solid fa-arrow-left"></i>
+            Voltar para objetos
+        </a>
+
+        <h1>Detalhes do objeto</h1>
+
+        <!-- INFORMAÇÕES PRINCIPAIS -->
+        <section class="card-principal">
+
+            <div class="imagem-container">
+                <img id="imagemObjeto"
+                     src=""
+                     alt="Foto do objeto encontrado">
+            </div>
+
+            <div class="informacoes">
+
+                <h2 id="nomeObjeto">Carregando objeto...</h2>
+
+                <span id="statusObjeto" class="status">
+                    <span class="status-ponto"></span>
+                    <span id="textoStatus">Carregando</span>
+                </span>
+
+                <div class="informacao-item">
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <div>
+                        <strong>Local encontrado</strong>
+                        <p id="localObjeto">—</p>
+                    </div>
+                </div>
+
+                <div class="informacao-item">
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <div>
+                        <strong>Data encontrada</strong>
+                        <p id="dataObjeto">—</p>
+                    </div>
+                </div>
+
+                <div class="informacao-item">
+                    <i class="fa-regular fa-user"></i>
+
+                    <div>
+                        <strong>Publicado por</strong>
+                        <p id="usuarioObjeto">—</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DESCRIÇÃO -->
+        <section class="card-descricao">
+            <h3>Descrição</h3>
+
+            <div class="descricao-conteudo">
+                <p id="descricaoObjeto">Carregando descrição...</p>
+            </div>
+        </section>
+
+        <!-- CONTATO -->
+        <section class="contato">
+            <a id="botaoWhatsApp"
+               href="#"
+               class="botao-whatsapp"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <i class="fa-brands fa-whatsapp"></i>
+                Entrar em contato pelo WhatsApp
+            </a>
+
+            <p class="aviso-contato">
+                Você será direcionado para o WhatsApp do usuário
+                que publicou este objeto.
+            </p>
+        </section>
+
+        <!-- ERRO DE CARREGAMENTO -->
+        <div id="mensagemErro" class="mensagem-erro" hidden>
+            Não foi possível encontrar este objeto.
+            <a href="../objetos/objetos.html">Voltar para a lista de objetos</a>
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        SITE CRIADO POR ESTUDANTES DO INSTITUTO FEDERAL
+    </footer>
+
+    <script src="js/detalhes_objetos.js"></script>
+
+</body>
+</html>
