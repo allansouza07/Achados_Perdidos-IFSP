@@ -8,510 +8,302 @@
 
     <link rel="stylesheet" href="css/pagina_inicial.css">
     <link rel="shortcut icon" href="../img/logo_ifsp.png" type="image/png">
-
 </head>
 
 <body>
 
-<header class="topbar">
+    <!-- CABEÇALHO -->
+    <header class="topbar">
+        <div class="nav-container">
 
-    <div class="nav-container">
+            <a class="brand" href="#">
+                <div class="ifsp-mark" aria-hidden="true">
+                    <span class="dot"></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span>
+                </div>
 
-        <!-- LOGO -->
-        <a class="brand" href="#">
+                <div class="brand-text">
+                    <strong>INSTITUTO<br>FEDERAL</strong>
+                    <small>São Paulo</small>
+                </div>
+            </a>
 
-            <div class="ifsp-mark" aria-hidden="true">
-                <span class="dot"></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+            <nav class="desktop-nav" aria-label="Navegação principal">
+                <a class="active" href="#">Início</a>
+                <a href="../sobre/sobre.html">Sobre</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="icon-button"
+                        type="button"
+                        aria-label="Pesquisar"
+                        onclick="document.getElementById('searchInput').focus()">
+                    ⌕
+                </button>
+
+                <img
+                    src="img/notificacoes.png"
+                    class="notification-image"
+                    alt="Notificações"
+                >
+
+                <button class="profile" type="button">
+                    <img
+                        src="img/avatar_homem_sem_fundo.png"
+                        alt=""
+                    >
+                    <span>Allan de Souza</span>
+                    <b aria-hidden="true">⌄</b>
+                </button>
+
+                <button
+                    class="menu-button"
+                    type="button"
+                    aria-label="Abrir menu"
+                    onclick="document.querySelector('.desktop-nav').classList.toggle('nav-open')"
+                >
+                    ☰
+                </button>
             </div>
-
-            <div class="brand-text">
-                <strong>
-                    INSTITUTO<br>
-                    FEDERAL
-                </strong>
-
-                <small>São Paulo</small>
-            </div>
-
-        </a>
-
-
-        <!-- MENU DESKTOP -->
-        <nav class="desktop-nav">
-
-            <a class="active" href="#">
-                Início
-            </a>
-
-            <a id = "objetos" href="#objetos">
-                Objetos
-            </a>
-
-            <a href="../sobre/sobre.html">
-                Sobre
-            </a>
-
-        </nav>
-
-
-        <!-- AÇÕES DO HEADER -->
-        <div class="nav-actions">
-
-            <button
-                class="icon-button"
-                aria-label="Pesquisar">
-                ⌕
-            </button>
-
-            
-            <img src="img/notificacoes.png" width="30px" height="30px"></img>
-
-
-
-
-            <button class="profile">
-
-                <img src = "img/avatar_homem_sem_fundo.png" width="30px" height="30px"></img>
-
-                <span>
-                    Allan de Souza
-                </span>
-
-                <b>
-                    ⌄
-                </b>
-
-            </button>
-
-
-            <button
-                class="menu-button"
-                aria-label="Abrir menu">
-
-                ☰
-
-            </button>
 
         </div>
+    </header>
 
-    </div>
+    <main class="container">
 
-</header>
+        <!-- APRESENTAÇÃO -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Olá, Allan de Souza!</h1>
 
+                <p>
+                    Encontre o que você perdeu
+                    <br class="desktop-only">
+                    ou ajude alguém a encontrar.
+                </p>
+            </div>
 
-<main class="container">
+            <div class="campus-art" aria-hidden="true">
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
 
+                <div class="tree tree-1"></div>
+                <div class="tree tree-2"></div>
 
-    <!-- HERO -->
-    <section class="hero">
+                <div class="building">
+                    <div class="building-sign">
+                        IF
+                        <br>
+                        <small>São Paulo</small>
+                    </div>
 
-        <div class="hero-content">
+                    <div class="windows"></div>
+                </div>
+            </div>
+        </section>
 
-            <h1>
-                Olá, Allan de Souza!
-            </h1>
+        <!-- CAMPO DE BUSCA -->
+        <section class="search-box">
+            <div class="search-input">
+                <span aria-hidden="true">⌕</span>
+
+                <div class="search-content">
+                    <label for="searchInput">
+                        O que você está procurando?
+                    </label>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        name="search"
+                        placeholder="Digite o nome do objeto (ex.: mochila, carteira, garrafa...)"
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+
+            <button
+                class="primary-btn"
+                id="searchBtn"
+                type="button"
+            >
+                ⌕ Buscar
+            </button>
+        </section>
+
+        <!-- AÇÕES PRINCIPAIS -->
+        <section class="actions">
+
+            <article class="action-card lost">
+                <div class="action-icon" aria-hidden="true">⌕</div>
+
+                <div class="action-content">
+                    <h2>Perdi um objeto</h2>
+
+                    <p>
+                        Pesquise entre os itens encontrados
+                        no Instituto Federal.
+                    </p>
+
+                    <button
+                        type="button"
+                        onclick="document.getElementById('objetos').scrollIntoView({behavior:'smooth'})"
+                    >
+                        Pesquisar objetos →
+                    </button>
+                </div>
+            </article>
+
+            <article class="action-card found">
+                <div class="action-icon" aria-hidden="true">📦</div>
+
+                <div class="action-content">
+                    <h2>Encontrei um objeto</h2>
+
+                    <p>
+                        Cadastre objetos encontrados para
+                        que eles possam ser devolvidos.
+                    </p>
+
+                    <a
+                        href="../cadastro_objeto/cadastro_objeto.html"
+                        class="btn-cadastrar"
+                    >
+                        Cadastrar objeto →
+                    </a>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- OBJETOS RECENTES -->
+        <section class="recent" id="objetos">
+
+            <div class="section-heading">
+                <h2>Objetos encontrados recentemente</h2>
+
+                <a href="../todos_objetos/todos_objetos.html">
+                    Ver todos os objetos →
+                </a>
+            </div>
+
+            <div class="objects-grid">
+
+                <!-- ESTOJO -->
+                <article class="object-card">
+                    <img
+                        class="imagem"
+                        src="../todos_objetos/img/estojo_azul.png"
+                        alt="Estojo azul"
+                        loading="lazy"
+                    >
+
+                    <h3>Estojo azul</h3>
+
+                    <p>▣ &nbsp;07/10/2026</p>
+                    <p>⌖ &nbsp;Biblioteca</p>
+                    <p>👤 &nbsp;Postado por: @GU3079689</p>
+
+                    <button type="button">Ver detalhes →</button>
+                </article>
+
+                <!-- GARRAFA -->
+                <article class="object-card">
+                    <img
+                        class="imagem"
+                        src="../todos_objetos/img/garrafa_preta.png"
+                        alt="Garrafa preta"
+                        loading="lazy"
+                    >
+
+                    <h3>Garrafa preta</h3>
+
+                    <p>▣ &nbsp;06/10/2026</p>
+                    <p>⌖ &nbsp;Sala F1</p>
+                    <p>👤 &nbsp;Postado por: @GU3079689</p>
+
+                    <button type="button">Ver detalhes →</button>
+                </article>
+
+                <!-- FONE -->
+                <article class="object-card">
+                    <img
+                        class="imagem"
+                        src="../todos_objetos/img/fone_jbl.png"
+                        alt="Fone de ouvido JBL"
+                        loading="lazy"
+                    >
+
+                    <h3>Fone de ouvido JBL</h3>
+
+                    <p>▣ &nbsp;05/10/2026</p>
+                    <p>⌖ &nbsp;Laboratório de Informática</p>
+                    <p>👤 &nbsp;Postado por: @3079689</p>
+
+                    <button type="button">Ver detalhes →</button>
+                </article>
+
+                <!-- ACESSO A TODOS OS OBJETOS -->
+                <article class="object-card more-card">
+                    <div class="plus" aria-hidden="true">+</div>
+
+                    <h3>Ver mais objetos</h3>
+
+                    <p>
+                        Acesse todos os objetos encontrados
+                        no campus.
+                    </p>
+
+                    <a
+                        href="../todos_objetos/todos_objetos.html"
+                        class="more-button"
+                    >
+                        Ver todos →
+                    </a>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer id="sobre">
+        <div class="footer-content">
+
+            <a class="brand footer-brand" href="#">
+                <div class="ifsp-mark" aria-hidden="true">
+                    <span class="dot"></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span>
+                </div>
+
+                <div class="brand-text">
+                    <strong>INSTITUTO<br>FEDERAL</strong>
+                    <small>São Paulo</small>
+                </div>
+            </a>
 
             <p>
-                Encontre o que você perdeu
-                <br class="desktop-only">
-                ou ajude alguém a encontrar.
+                Desenvolvido por Allan, estudante de ADS
+                do Instituto Federal de São Paulo.
             </p>
 
-        </div>
-
-
-        <!-- ILUSTRAÇÃO -->
-        <div class="campus-art">
-
-            <div class="cloud cloud-1"></div>
-
-            <div class="cloud cloud-2"></div>
-
-            <div class="tree tree-1"></div>
-
-            <div class="tree tree-2"></div>
-
-
-            <div class="building">
-
-                <div class="building-sign">
-
-                    IF
-
-                    <br>
-
-                    <small>
-                        São Paulo
-                    </small>
-
-                </div>
-
-
-                <div class="windows"></div>
-
-            </div>
+            <nav aria-label="Navegação do rodapé">
+                <a href="#">Início</a>
+                <a href="#objetos">Objetos</a>
+                <a href="#sobre">Sobre</a>
+            </nav>
 
         </div>
+    </footer>
 
-    </section>
-
-
-
-    <!-- BUSCA -->
-    <section class="search-box">
-
-        <div class="search-input">
-
-    <span>⌕</span>
-
-    <div class="search-content">
-
-        <label for="searchInput">
-            O que você está procurando?
-        </label>
-
-        <input
-            type="text"
-            id="searchInput"
-            name="search"
-            placeholder="Digite o nome do objeto (ex.: mochila, carteira, garrafa...)"
-            autocomplete="off"
-        >
-
-    </div>
-
-</div>
-
-        </div>
-
-
-        <button
-            class="primary-btn"
-            id="searchBtn">
-
-            ⌕
-            Buscar
-
-        </button>
-
-    </section>
-
-
-
-    <!-- AÇÕES -->
-    <section class="actions">
-
-
-        <!-- PERDI -->
-        <article class="action-card lost">
-
-            <div class="action-icon">
-                ⌕
-            </div>
-
-
-            <div>
-
-                <h2>
-                    Perdi um objeto
-                </h2>
-
-
-                <p>
-                    Pesquise entre os itens encontrados
-                    no Instituto Federal.
-                </p>
-
-
-                <button>
-                    Pesquisar objetos →
-                </button>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- ENCONTREI -->
-        <article class="action-card found">
-
-            <div class="action-icon">
-                📦
-            </div>
-
-
-            <div>
-
-                <h2>
-                    Encontrei um objeto
-                </h2>
-
-
-                <p>
-                    Cadastre objetos encontrados para
-                    que eles possam ser devolvidos.
-                </p>
-
-
-                <a href='../cadastro_objeto/cadastro_objeto.html' class='btn-cadastrar'>
-                    Cadastrar objeto →
-                
-            </a>
-            </div>
-
-        </article>
-
-    </section>
-
-
-
-    <!-- OBJETOS -->
-    <section
-        class="recent"
-        id="objetos">
-
-
-        <div class="section-heading">
-
-            <h2>
-                Objetos encontrados recentemente
-            </h2>
-
-
-            <a href="../todos_objetos/todos_objetos.html">
-                Ver todos os objetos →
-            </a>
-
-        </div>
-
-
-
-        <div class="objects-grid">
-
-
-            <!-- ESTOJO -->
-            <article class="object-card">
-
-                <img class="imagem" src='../todos_objetos/img/estojo_azul.png'></img>
-
-
-                <h3>
-                    Estojo azul
-                </h3>
-
-
-                <p>
-                    ▣ &nbsp;07/10/2026
-                </p>
-
-
-                <p>
-                    ⌖ &nbsp;Biblioteca
-                </p>
-
-
-                <p>
-                    👤 &nbsp;Postado por: @GU3079689
-                </p>
-
-
-                <button>
-                    Ver detalhes →
-                </button>
-
-            </article>
-
-
-
-            <!-- GARRAFA -->
-            <article class="object-card">
-
-                <img class="imagem" src='../todos_objetos/img/garrafa_preta.png'></img>
-
-
-                <h3>
-                    Garrafa preta
-                </h3>
-
-
-                <p>
-                    ▣ &nbsp;06/10/2026
-                </p>
-
-
-                <p>
-                    ⌖ &nbsp;Sala F1
-                </p>
-
-
-                <p>
-                    👤 &nbsp;Postado por: @GU3079689
-                </p>
-
-
-                <button>
-                    Ver detalhes →
-                </button>
-
-            </article>
-
-
-
-            <!-- FONE -->
-            <article class="object-card">
-
-                <img class="imagem" src='../todos_objetos/img/fone_jbl.png'></img>
-
-
-                <h3>
-                    Fone de ouvido JBL
-                </h3>
-
-
-                <p>
-                    ▣ &nbsp;05/10/2026
-                </p>
-
-
-                <p>
-                    ⌖ &nbsp;Laboratório de Informática
-                </p>
-
-
-                <p>
-                    👤 &nbsp;Postado por: @3079689
-                </p>
-
-
-                <button>
-                    Ver detalhes →
-                </button>
-
-            </article>
-
-
-
-            <!-- MAIS OBJETOS -->
-            <article class="object-card more-card">
-
-                <div class="plus">
-                    +
-                </div>
-
-
-                <h3>
-                    Ver mais objetos
-                </h3>
-
-
-                <p>
-                    Acesse todos os objetos
-                    encontrados no campus.
-                </p>
-
-
-            <a
-            href="../todos_objetos/todos_objetos.html"
-            class="more-button">
-
-            Ver todos →
-
-        </a>
-
-            </article>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-
-<!-- FOOTER -->
-<footer id="sobre">
-
-    <div class="footer-content">
-
-
-        <div class="brand footer-brand">
-
-            <div
-                class="ifsp-mark"
-                aria-hidden="true">
-
-                <span class="dot"></span>
-
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </div>
-
-
-            <div class="brand-text">
-
-                <strong>
-                    INSTITUTO<br>
-                    FEDERAL
-                </strong>
-
-                <small>
-                    São Paulo
-                </small>
-
-            </div>
-
-        </div>
-
-
-        <p>
-            Desenvolvido por Allan, estudante de ADS do Instituto Federal de São Paulo.
-        </p>
-
-
-        <nav>
-
-            <a href="#">
-                Início
-            </a>
-
-            <a href="#objetos">
-                Objetos
-            </a>
-
-            <a href="#sobre">
-                Sobre
-            </a>
-
-        </nav>
-
-    </div>
-
-</footer>
-
-
-<script src="js/pagina_inicial.js"></script>
+    <script src="js/pagina_inicial.js"></script>
 
 </body>
 </html>
