@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confirmação de cadastro de objeto no sistema Achados e Perdidos do IFSP.">
+
+    <title>Cadastro concluído | Achados e Perdidos IFSP</title>
+
+    <link rel="stylesheet" href="css/objeto_cadastrado.css">
+    <script src="js/objeto_cadastrado.js" defer></script>
+</head>
+<body>
+
+    
+
+    <main class="conteudo-principal">
+        <section class="cartao-sucesso"
+                 aria-labelledby="tituloSucesso">
+
+            <div class="icone-sucesso" aria-hidden="true">
+                <svg viewBox="0 0 100 100">
+                    <path d="M28 51 43 66 73 35"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <h1 id="tituloSucesso">
+                Objeto cadastrado com sucesso!
+            </h1>
+
+            <p class="mensagem-sucesso">
+                Seu objeto já está disponível no sistema<br class="quebra-desktop">
+                de Achados e Perdidos do IFSP.
+            </p>
+
+            <div class="botoes-acoes">
+                <button type="button"
+                        class="botao botao-principal"
+                        id="verObjeto">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Ver meu objeto
+                </button>
+
+                <a href="../pagina_inicial/pagina_inicial.html"
+                   class="botao botao-secundario">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m3 10 9-7 9 7"></path>
+                        <path d="M5 9v12h14V9"></path>
+                        <path d="M9 21v-7h6v7"></path>
+                    </svg>
+                    Voltar para o início
+                </a>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <p>SITE CRIADO POR ESTUDANTES DO INSTITUTO FEDERAL</p>
+    </footer>
+
+</body>
+</html>

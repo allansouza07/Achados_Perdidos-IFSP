@@ -400,127 +400,55 @@ function validateForm() {
    SUBMIT
    ========================================================= */
 
-form.addEventListener(
-    "submit",
-    (event) => {
 
-        event.preventDefault();
+/* =========================================================
+   SUBMIT — CADASTRO DO OBJETO
+   ========================================================= */
 
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-        if (!validateForm()) {
-
-            return;
-
-        }
-
-
-        /*
-         * POR ENQUANTO:
-         *
-         * Os dados não são enviados para o banco.
-         *
-         * Estamos apenas montando o objeto.
-         */
-
-
-        const objeto = {
-
-            nome:
-                nomeObjeto.value.trim(),
-
-            categoria:
-                categoria.value,
-
-            local:
-                local.value,
-
-            data_encontrada:
-                dataEncontrada.value,
-
-            descricao:
-                descricao.value.trim(),
-
-            foto:
-                photoInput.files[0] || null
-
-        };
-
-
-        console.log(
-            "Objeto pronto para API:",
-            objeto
-        );
-
-
-        alert(
-            "Objeto validado com sucesso!\n\n" +
-            "Na próxima etapa iremos conectar " +
-            "este formulário ao Flask e ao MySQL."
-        );
-
-
-        /*
-         * =====================================================
-         * FUTURA INTEGRAÇÃO COM FLASK
-         * =====================================================
-         *
-         * const formData = new FormData();
-         *
-         * formData.append(
-         *     "nome",
-         *     objeto.nome
-         * );
-         *
-         * formData.append(
-         *     "categoria",
-         *     objeto.categoria
-         * );
-         *
-         * formData.append(
-         *     "local",
-         *     objeto.local
-         * );
-         *
-         * formData.append(
-         *     "data_encontrada",
-         *     objeto.data_encontrada
-         * );
-         *
-         * formData.append(
-         *     "descricao",
-         *     objeto.descricao
-         * );
-         *
-         * formData.append(
-         *     "foto",
-         *     objeto.foto
-         * );
-         *
-         *
-         * fetch(
-         *     "http://127.0.0.1:5000/api/objetos",
-         *     {
-         *         method: "POST",
-         *         body: formData
-         *     }
-         * )
-         * .then(response => response.json())
-         * .then(data => {
-         *
-         *     console.log(data);
-         *
-         * })
-         * .catch(error => {
-         *
-         *     console.error(error);
-         *
-         * });
-         *
-         * =====================================================
-         */
-
+    // 1. Valida todos os campos obrigatórios.
+    if (!validateForm()) {
+        return;
     }
-);
+
+    // 2. Monta o objeto com os dados do formulário.
+    const objeto = {
+        nome: nomeObjeto.value.trim(),
+        categoria: categoria.value,
+        local: local.value,
+        data_encontrada: dataEncontrada.value,
+        descricao: descricao.value.trim(),
+        foto: photoInput.files[0] || null
+    };
+
+    console.log("Objeto validado:", objeto);
+
+    /*
+     * ETAPA TEMPORÁRIA:
+     * Ainda não existe confirmação de salvamento no banco.
+     * Este redirecionamento serve apenas para testar as telas.
+     */
+
+    sessionStorage.setItem("objetoCadastrado", "true");
+
+    // Guarda os dados temporariamente para a próxima tela.
+    sessionStorage.setItem(
+        "objetoTemporario",
+        JSON.stringify({
+            nome: objeto.nome,
+            categoria: objeto.categoria,
+            local: objeto.local,
+            data_encontrada: objeto.data_encontrada,
+            descricao: objeto.descricao
+        })
+    );
+
+    // 3. Abre a página de confirmação.
+    window.location.href =
+        "./objeto_cadastrado.html";
+});
 
 
 

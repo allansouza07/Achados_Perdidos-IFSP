@@ -152,7 +152,43 @@ a {
 
     margin-top: 2px;
 }
+.cartao{
+    background-color: green;
+    text-align: center;
+    border-radius:40px;
+    height:40px;
+    width:385px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    color:white;
+}
+.notification-image {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
 
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    background: transparent;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.profile img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.profile b {
+    font-size: 17px;
+}
 
 /* MENU */
 

@@ -549,7 +549,17 @@ img {
 /* =========================================
    OBJETOS RECENTES
 ========================================= */
-
+.cartao{
+    background-color: green;
+    text-align: center;
+    border-radius:40px;
+    height:40px;
+    width:290px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    color:white;
+}
 .recent {
     display: block;
     margin: 30px 0 24px;
