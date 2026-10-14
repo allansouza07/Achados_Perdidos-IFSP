@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const byId = id => document.getElementById(id);
-
     const galleryButton = byId("galleryButton");
     const cameraButton = byId("cameraButton");
     const galleryInput = byId("galleryInput");
@@ -20,30 +19,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = byId("loginForm");
     const message = byId("formMessage");
     const button = byId("continueButton");
-
     let selectedPhoto = null;
 
     galleryButton.addEventListener("click", () => galleryInput.click());
     cameraButton.addEventListener("click", () => cameraInput.click());
     byId("photoPreview").addEventListener("click", () => galleryInput.click());
-
     galleryInput.addEventListener("change", () => selectPhoto(galleryInput.files[0]));
     cameraInput.addEventListener("change", () => selectPhoto(cameraInput.files[0]));
 
     function selectPhoto(file) {
         if (!file) return;
-
         if (!file.type.startsWith("image/")) {
             photoError.textContent = "Selecione um arquivo de imagem válido.";
             return;
         }
-
-        // A foto será transportada na sessão do navegador em formato Data URL.
         if (file.size > 2 * 1024 * 1024) {
             photoError.textContent = "A foto deve ter no máximo 2 MB.";
             return;
         }
-
         selectedPhoto = file;
         photoError.textContent = "";
         preview.src = URL.createObjectURL(file);
@@ -77,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     telefone.addEventListener("input", () => {
         const digits = telefone.value.replace(/\D/g, "").slice(0, 11);
-
         if (digits.length <= 2) {
             telefone.value = digits ? "(" + digits : "";
         } else if (digits.length <= 7) {
@@ -86,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
             telefone.value = "(" + digits.slice(0, 2) + ") " +
                 digits.slice(2, 7) + "-" + digits.slice(7);
         }
-
         telefoneError.textContent = "";
     });
 
@@ -101,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
-
         [photoError, nomeError, matriculaError, telefoneError, message]
             .forEach(element => element.textContent = "");
 
@@ -114,45 +104,56 @@ document.addEventListener("DOMContentLoaded", function () {
             photoError.textContent = "Adicione uma foto para continuar.";
             valid = false;
         }
-
         if (nomeValue.length < 2) {
             nomeError.textContent = "Digite seu nome completo.";
             valid = false;
         }
-
         if (!/^[A-Z0-9]{9}$/.test(matriculaValue)) {
             matriculaError.textContent = "A matrícula deve conter 9 letras ou números.";
             valid = false;
         }
-
         if (telefoneValue.length < 10 || telefoneValue.length > 11) {
             telefoneError.textContent = "Digite um telefone válido com DDD.";
             valid = false;
         }
-
         if (!valid) return;
 
         const originalButtonHTML = button.innerHTML;
         button.disabled = true;
-        button.textContent = "AGUARDE...";
-        message.textContent = "Preparando seus dados...";
+        button.textContent = "SALVANDO...";
+        message.textContent = "Salvando seus dados no banco de dados...";
 
         try {
-            const user = {
-                nome: nomeValue,
-                matricula: matriculaValue,
-                telefone: telefoneValue,
-                foto: await readPhotoAsDataURL(selectedPhoto),
-                fotoNome: selectedPhoto.name
-            };
+            const foto = await readPhotoAsDataURL(selectedPhoto);
+            const response = await fetch("http://127.0.0.1:5000/api/usuarios/identificar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    nome: nomeValue,
+                    matricula: matriculaValue,
+                    telefone: telefoneValue,
+                    foto: foto
+                })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result.erro || result.mensagem ||
+                    "Não foi possível salvar o cadastro.");
+            }
 
-            // sessionStorage persiste entre as páginas na mesma aba do navegador.
-            sessionStorage.setItem("usuarioAchadosPerdidos", JSON.stringify(user));
-
-            // Caminho relativo à raiz do projeto (onde fica este index.html).
+            const savedUser = result.usuario;
+            sessionStorage.setItem("usuarioAchadosPerdidos", JSON.stringify({
+                id: savedUser.IDUSUARIO,
+                nome: savedUser.NOME_USUARIO,
+                matricula: savedUser.MATRICULA,
+                telefone: savedUser.TELEFONE,
+                foto: savedUser.foto_url,
+                fotoNome: savedUser.FOTO
+            }));
             window.location.href = "frontend/pagina_inicial/pagina_inicial.html";
         } catch (error) {
-            message.textContent = error.message || "Não foi possível preparar seus dados.";
+            message.textContent = error.message ||
+                "Erro ao comunicar com o servidor. Confira se o Flask está em execução.";
             button.disabled = false;
             button.innerHTML = originalButtonHTML;
         }
