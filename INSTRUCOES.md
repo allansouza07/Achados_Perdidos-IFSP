@@ -15,7 +15,7 @@ No terminal, entre na pasta `backend` e instale as dependências:
 ```bash
 pip install -r requirements.txt
 ```
-
+ 
 Copie `.env.example` para `.env` dentro de `backend/` e edite `DB_PASSWORD` com a senha local do MySQL. Não publique o `.env` no GitHub.
 
 Confirme que o banco `ACHADOS_E_PERDIDOS` e a tabela `USUARIO` existem com as colunas:
