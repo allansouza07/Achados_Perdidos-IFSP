@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             const foto = await readPhotoAsDataURL(selectedPhoto);
-            const response = await fetch("http://127.0.0.1:5000/api/usuarios/identificar", {
+            const response = await fetch("http://achadosperdidos-ifsp-production.up.railway.app/api/usuarios/identificar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
