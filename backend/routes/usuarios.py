@@ -145,10 +145,72 @@ def criar_usuario():
         cursor = conn.cursor()
 
         # Verificação explícita, mesmo se a tabela ainda não tiver índice UNIQUE.
-        cursor.execute("SELECT IDUSUARIO FROM USUARIO WHERE MATRICULA = %s", (matricula,))
-        if cursor.fetchone():
-            photo_path.unlink(missing_ok=True)
-            return error_response("Essa matrícula já está cadastrada.", 409)
+        cursor.execute(
+            """
+            SELECT IDUSUARIO, FOTO
+            FROM USUARIO
+            WHERE MATRICULA = %s
+            """,
+            (matricula,)
+        )
+
+        usuario_existente = cursor.fetchone()
+
+        if usuario_existente:
+            id_usuario, foto_antiga = usuario_existente
+
+            cursor.execute(
+                """
+                UPDATE USUARIO
+                SET NOME_USUARIO = %s,
+                    FOTO = %s,
+                    TELEFONE = %s
+                WHERE IDUSUARIO = %s
+                """,
+                (nome, filename, telefone, id_usuario),
+            )
+
+            conn.commit()
+
+            # Apaga a foto antiga somente após atualizar o banco.
+            if foto_antiga and foto_antiga != filename:
+                caminho_antigo = UPLOAD_DIR / foto_antiga
+                caminho_antigo.unlink(missing_ok=True)
+
+            mensagem = "Usuário identificado e atualizado com sucesso."
+            status_http = 200
+
+        else:
+            cursor.execute(
+                """
+                INSERT INTO USUARIO
+                    (MATRICULA, NOME_USUARIO, FOTO, TELEFONE)
+                VALUES (%s, %s, %s, %s)
+                """,
+                (matricula, nome, filename, telefone),
+            )
+
+            conn.commit()
+            id_usuario = cursor.lastrowid
+
+            mensagem = "Cadastro realizado com sucesso."
+            status_http = 201
+
+        return {
+            "mensagem": mensagem,
+            "usuario": {
+                "IDUSUARIO": id_usuario,
+                "MATRICULA": matricula,
+                "NOME_USUARIO": nome,
+                "TELEFONE": telefone,
+                "FOTO": filename,
+                "foto_url": url_for(
+                    "usuarios.foto_usuario",
+                    nome_arquivo=filename,
+                    _external=True,
+                ),
+            },
+        }, status_http
 
         cursor.execute(
             "INSERT INTO USUARIO (MATRICULA, NOME_USUARIO, FOTO, TELEFONE) "
