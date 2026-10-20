@@ -6,6 +6,7 @@ from flask_cors import CORS
 
 from config.database import test_connection
 from routes.usuarios import usuarios_bp
+from routes.objetos import objetos_bp
 
 
 # Raiz do repositório, um nível acima da pasta backend
@@ -16,6 +17,7 @@ PROJECT_ROOT = os.path.abspath(
 
 def create_app():
     app = Flask(__name__)
+    
 
     app.config["MAX_CONTENT_LENGTH"] = 6 * 1024 * 1024
 
@@ -26,6 +28,7 @@ def create_app():
         usuarios_bp,
         url_prefix="/api/usuarios"
     )
+    app.register_blueprint(objetos_bp, url_prefix="/api/objetos")
 
     # Teste da API
     @app.get("/api/health")

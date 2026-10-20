@@ -12,29 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const descricao = document.getElementById("descricao");
     const counter = document.getElementById("charCounter");
     const submit = form.querySelector('button[type="submit"]');
-    const STORAGE_KEY = "achadosPerdidos_objetosCadastrados";
+    const API = window.ACHADOS_API_URL || "https://achadosperdidos-ifsp-production.up.railway.app";
 
-    // Usa a data local do computador, evitando divergências de fuso horário.
     const now = new Date();
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     const today = now.toISOString().slice(0, 10);
     data.max = today;
-
-    descricao.addEventListener("input", () => {
-        counter.textContent = `${descricao.value.length}/500`;
-    });
+    descricao.addEventListener("input", () => counter.textContent = `${descricao.value.length}/500`);
 
     let photoData = "";
     function previewFile(file) {
         if (!file) return;
-        if (!file.type.startsWith("image/")) {
-            alert("Selecione um arquivo de imagem válido.");
-            photoInput.value = "";
-            return;
-        }
-        // Limite para evitar exceder a capacidade do armazenamento do navegador.
-        if (file.size > 2 * 1024 * 1024) {
-            alert("A imagem deve ter no máximo 2 MB nesta versão de teste.");
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || file.size > 2 * 1024 * 1024) {
+            alert("Selecione uma imagem JPG, PNG ou WEBP de até 2 MB.");
             photoInput.value = "";
             return;
         }
@@ -42,83 +32,55 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.onload = () => {
             photoData = String(reader.result || "");
             photoPreview.replaceChildren();
-            const img = document.createElement("img");
-            img.src = photoData;
-            img.alt = "Pré-visualização da foto do objeto";
-            photoPreview.appendChild(img);
+            const image = document.createElement("img");
+            image.src = photoData;
+            image.alt = "Pré-visualização da foto do objeto";
+            photoPreview.appendChild(image);
             photoPreview.style.display = "block";
         };
-        reader.onerror = () => alert("Não foi possível abrir esta imagem.");
+        reader.onerror = () => alert("Não foi possível abrir a imagem.");
         reader.readAsDataURL(file);
     }
-
     photoInput.addEventListener("change", () => previewFile(photoInput.files[0]));
-    photoUpload.addEventListener("dragover", event => {
-        event.preventDefault();
-        photoUpload.classList.add("dragover");
-    });
-    photoUpload.addEventListener("dragleave", () => photoUpload.classList.remove("dragover"));
-    photoUpload.addEventListener("drop", event => {
-        event.preventDefault();
+    photoUpload?.addEventListener("dragover", e => { e.preventDefault(); photoUpload.classList.add("dragover"); });
+    photoUpload?.addEventListener("dragleave", () => photoUpload.classList.remove("dragover"));
+    photoUpload?.addEventListener("drop", e => {
+        e.preventDefault();
         photoUpload.classList.remove("dragover");
-        const file = event.dataTransfer.files[0];
+        const file = e.dataTransfer.files[0];
         if (!file) return;
-        if (!file.type.startsWith("image/") || file.size > 2 * 1024 * 1024) {
-            alert("Selecione uma imagem válida de até 2 MB.");
-            return;
-        }
         const transfer = new DataTransfer();
         transfer.items.add(file);
         photoInput.files = transfer.files;
         previewFile(file);
     });
 
-    function showError(field, errorId, message) {
+    function error(field, id, message) {
         field.classList.add("input-error");
-        document.getElementById(errorId).textContent = message;
+        document.getElementById(id).textContent = message;
     }
-    function clearError(field, errorId) {
+    function clearError(field, id) {
         field.classList.remove("input-error");
-        document.getElementById(errorId).textContent = "";
+        document.getElementById(id).textContent = "";
     }
     function validate() {
         let valid = true;
         const fields = [
             [nome, "nomeError", !nome.value.trim(), "Informe o nome do objeto."],
             [categoria, "categoriaError", !categoria.value, "Selecione uma categoria."],
-            [local, "localError", !local.value, "Selecione o local onde encontrou o objeto."],
-            [data, "dataError", !data.value, "Informe a data em que encontrou o objeto."],
-            [descricao, "descricaoError", !descricao.value.trim(), "Informe uma descrição do objeto."]
+            [local, "localError", !local.value, "Selecione o local."],
+            [data, "dataError", !data.value, "Informe a data encontrada."],
+            [descricao, "descricaoError", !descricao.value.trim(), "Informe a descrição."]
         ];
         fields.forEach(([field, id, invalid, message]) => {
-            if (invalid) {
-                showError(field, id, message);
-                valid = false;
-            } else {
-                clearError(field, id);
-            }
+            if (invalid) { error(field, id, message); valid = false; }
+            else clearError(field, id);
         });
         if (data.value && data.value > today) {
-            showError(data, "dataError", "A data não pode ser futura.");
+            error(data, "dataError", "A data não pode ser futura.");
             valid = false;
         }
         return valid;
-    }
-    function readStoredObjects() {
-        try {
-            const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-            return Array.isArray(parsed) ? parsed : [];
-        } catch (error) {
-            console.error("Não foi possível ler os objetos salvos localmente.", error);
-            return [];
-        }
-    }
-    function getCurrentUser() {
-        try {
-            return JSON.parse(sessionStorage.getItem("usuarioAchadosPerdidos") || "null");
-        } catch {
-            return null;
-        }
     }
 
     form.addEventListener("submit", async event => {
@@ -127,88 +89,63 @@ document.addEventListener("DOMContentLoaded", () => {
             form.querySelector(".input-error")?.focus();
             return;
         }
+        let user;
+        try { user = JSON.parse(sessionStorage.getItem("usuarioAchadosPerdidos") || "null"); }
+        catch { user = null; }
+        const idUsuario = user?.IDUSUARIO ?? user?.id_usuario ?? user?.id;
+        if (!idUsuario) {
+            alert("Não encontrei seu cadastro de usuário. Volte à tela de identificação e entre novamente.");
+            return;
+        }
 
-        const originalText = submit.textContent;
+        const labels = {
+            vestuario: "VESTUÁRIO",
+            eletronico: "ELETRÔNICO",
+            item_pessoal: "ITEM PESSOAL"
+        };
+        const original = submit.textContent;
         submit.disabled = true;
-        submit.textContent = "Preparando cadastro...";
-
+        submit.textContent = "Salvando no banco...";
         try {
-            const user = getCurrentUser();
-            const categoryLabels = {
-                vestuario: "Vestuário",
-                eletronico: "Eletrônico",
-                item_pessoal: "Item pessoal"
-            };
-            const locationLabels = {
-                biblioteca: "Biblioteca",
-                sala_aula: "Sala de aula",
-                laboratorio: "Laboratório",
-                patio: "Pátio",
-                cantina: "Cantina",
-                quadra: "Quadra",
-                corredor: "Corredor",
-                outro: "Outro"
-            };
-            const objeto = {
-                id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-                nome: nome.value.trim(),
-                categoria: categoria.value,
-                categoriaLabel: categoryLabels[categoria.value] || categoria.value,
-                local: local.value,
-                localLabel: locationLabels[local.value] || local.value,
-                data: data.value,
-                descricao: descricao.value.trim(),
-                imagem: photoData,
-                usuario: user?.nome || "Usuário do IFSP",
-                telefone: (user?.telefone || "").replace(/\D/g, ""),
-                status: "Disponível",
-                criadoEm: new Date().toISOString()
-            };
-
-            const dataFormatada = objeto.data.split("-").reverse().join("/");
-            const resumo = [
-                `Objeto: ${objeto.nome}`,
-                `Categoria: ${objeto.categoriaLabel}`,
-                `Local: ${objeto.localLabel}`,
-                `Data encontrada: ${dataFormatada}`
-            ].join("\n");
-
-            // A publicação só ocorre quando a pessoa confirma os dados.
-            if (!confirm(`Confira os dados antes de confirmar o cadastro:\n\n${resumo}\n\nApós confirmar, o objeto aparecerá em “Todos os objetos” neste navegador.`)) {
-                submit.disabled = false;
-                submit.textContent = originalText;
-                return;
-            }
-
-            const objects = readStoredObjects();
-            objects.unshift(objeto);
-            // Falha controladamente se o navegador estiver sem espaço disponível.
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(objects));
+            const response = await fetch(`${API}/api/objetos`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    nome_objeto: nome.value.trim(),
+                    categoria: labels[categoria.value] || categoria.value,
+                    local: local.options[local.selectedIndex].text.trim(),
+                    data_ocorrencia: data.value,
+                    descricao: descricao.value.trim().slice(0, 300),
+                    foto: photoData,
+                    id_usuario: Number(idUsuario),
+                    tipo: "ENCONTRADO"
+                })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result.erro || result.mensagem || "Falha ao cadastrar objeto.");
             sessionStorage.setItem("objetoCadastrado", "true");
-            sessionStorage.setItem("objetoId", objeto.id);
-            sessionStorage.setItem("objetoTemporario", JSON.stringify(objeto));
+            sessionStorage.setItem("objetoId", String(result.id));
             window.location.href = "./objeto_cadastrado.html";
-        } catch (error) {
-            console.error("Erro ao salvar objeto localmente:", error);
-            alert("O navegador não conseguiu guardar os dados. Tente remover a foto ou usar uma imagem menor.");
+        } catch (err) {
+            console.error(err);
+            alert(`${err.message}\n\nConfira se o backend está online e se a migração SQL foi executada.`);
             submit.disabled = false;
-            submit.textContent = originalText;
+            submit.textContent = original;
         }
     });
 
-    document.getElementById("cancelButton").addEventListener("click", () => {
-        if (!confirm("Deseja limpar o formulário? Os dados preenchidos serão perdidos.")) return;
+    document.getElementById("cancelButton")?.addEventListener("click", () => {
+        if (!confirm("Deseja limpar o formulário?")) return;
         form.reset();
         photoData = "";
         photoPreview.replaceChildren();
         photoPreview.style.display = "none";
         counter.textContent = "0/500";
-        document.querySelectorAll(".error-message").forEach(element => element.textContent = "");
-        document.querySelectorAll(".input-error").forEach(element => element.classList.remove("input-error"));
+        document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
+        document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
     });
-
-    document.getElementById("backLink").addEventListener("click", event => {
-        event.preventDefault();
+    document.getElementById("backLink")?.addEventListener("click", e => {
+        e.preventDefault();
         window.history.back();
     });
 });
