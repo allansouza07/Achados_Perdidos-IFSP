@@ -12,7 +12,7 @@
             const title = card.querySelector("h1, h2, h3, h4, .object-title, [data-name]");
             const name = normalize((title && (title.textContent || title.getAttribute("data-name"))) || card.getAttribute("data-name") || "");
             const matches = blocked.some(function (term) {
-                const target = normalize(term);
+                const target = normalize(term); 
                 return name === target || name.startsWith(target + " ") || name.includes(target);
             });
             if (matches) card.remove();
