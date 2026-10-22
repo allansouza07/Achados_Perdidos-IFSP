@@ -3,106 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Achados e Perdidos - IFSP</title>
-
     <link rel="stylesheet" href="css/pagina_inicial.css">
     <link rel="shortcut icon" href="../img/logo_ifsp.png" type="image/png">
+    <style>
+        .objects-loading, .objects-empty {
+            grid-column: 1 / -1;
+            padding: 24px;
+            color: #606060;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .object-card .imagem.sem-imagem {
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 220px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            color: #17833d;
+            background: #f1f7f2;
+            font-size: 48px;
+        }
+        @media (max-width: 760px) {
+            .object-card .imagem.sem-imagem { height: clamp(105px, 32vw, 160px); }
+        }
+    </style>
 </head>
-
 <body>
-
     <!-- CABEÇALHO -->
     <header class="topbar">
         <div class="nav-container">
-
             <a class="brand" href="#">
                 <div class="ifsp-mark" aria-hidden="true">
-                    <span class="dot"></span>
+                    <span class="dot"></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
                     <span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                    <span></span><span></span>
                 </div>
-
-                <div class="brand-text">
-                    <strong>INSTITUTO<br>FEDERAL</strong>
-                    <small>São Paulo</small>
-                </div>
+                <div class="brand-text"><strong>INSTITUTO<br>FEDERAL</strong><small>São Paulo</small></div>
             </a>
-
             <nav class="desktop-nav" aria-label="Navegação principal">
                 <a class="active" href="#">Início</a>
                 <a href="../sobre/sobre.html">Sobre</a>
             </nav>
-
             <div class="nav-actions">
-                <button class="icon-button"
-                        type="button"
-                        aria-label="Pesquisar"
-                        onclick="document.getElementById('searchInput').focus()">
-                    ⌕
-                </button>
-                <a href=""><img
-                    src="img/notificacoes.png"
-                    class="notification-image"
-                    alt="Notificações"
-                ></a>
-                
-
-               <a class="profile" href="#" aria-label="Perfil do usuário">
-                <img
-                    id="profilePhoto"
-                    src="img/avatar_homem_sem_fundo.png"
-                    alt="Foto do usuário"
-                >
-                <span id="profileName">Visitante</span>
-                <b aria-hidden="true">⌄</b>
-            </a>
-
-                <button
-                    class="menu-button"
-                    type="button"
-                    aria-label="Abrir menu"
-                    onclick="document.querySelector('.desktop-nav').classList.toggle('nav-open')"
-                >
-                    ☰
-                </button>
+                <button class="icon-button" type="button" aria-label="Pesquisar" onclick="document.getElementById('searchInput').focus()">⌕</button>
+                <a href=""><img src="img/notificacoes.png" class="notification-image" alt="Notificações"></a>
+                <a class="profile" href="#" aria-label="Perfil do usuário">
+                    <img id="profilePhoto" src="img/avatar_homem_sem_fundo.png" alt="Foto do usuário">
+                    <span id="profileName">Visitante</span><b aria-hidden="true">⌄</b>
+                </a>
+                <button class="menu-button" type="button" aria-label="Abrir menu" onclick="document.querySelector('.desktop-nav').classList.toggle('nav-open')">☰</button>
             </div>
-
         </div>
     </header>
 
     <main class="container">
-
         <!-- APRESENTAÇÃO -->
         <section class="hero">
             <div class="hero-content">
                 <h1 id="welcomeTitle">Olá!</h1>
-
-                <p>
-                    Encontre o que você perdeu
-                    <br class="desktop-only">
-                    ou ajude alguém a encontrar.
-                </p>
+                <p>Encontre o que você perdeu<br class="desktop-only"> ou ajude alguém a encontrar.</p>
             </div>
-
             <div class="campus-art" aria-hidden="true">
-                <div class="cloud cloud-1"></div>
-                <div class="cloud cloud-2"></div>
-
-                <div class="tree tree-1"></div>
-                <div class="tree tree-2"></div>
-
-                <div class="building">
-                    <div class="building-sign">
-                        IF
-                        <br>
-                        <small>São Paulo</small>
-                    </div>
-
-                    <div class="windows"></div>
-                </div>
+                <div class="cloud cloud-1"></div><div class="cloud cloud-2"></div>
+                <div class="tree tree-1"></div><div class="tree tree-2"></div>
+                <div class="building"><div class="building-sign">IF<br><small>São Paulo</small></div><div class="windows"></div></div>
             </div>
         </section>
 
@@ -110,204 +76,68 @@
         <section class="search-box">
             <div class="search-input">
                 <span aria-hidden="true">⌕</span>
-
                 <div class="search-content">
-                    <label for="searchInput">
-                        O que você está procurando?
-                    </label>
-
-                    <input
-                        type="text"
-                        id="searchInput"
-                        name="search"
-                        placeholder="Digite o nome do objeto (ex.: mochila, carteira, garrafa...)"
-                        autocomplete="off"
-                    >
+                    <label for="searchInput">O que você está procurando?</label>
+                    <input type="text" id="searchInput" name="search" placeholder="Digite o nome do objeto (ex.: mochila, carteira, garrafa...)" autocomplete="off">
                 </div>
             </div>
-
-            <button
-                class="primary-btn"
-                id="searchBtn"
-                type="button"
-            >
-                ⌕ Buscar
-            </button>
+            <button class="primary-btn" id="searchBtn" type="button">⌕ Buscar</button>
         </section>
 
         <!-- AÇÕES PRINCIPAIS -->
         <section class="actions">
-
             <article class="action-card lost">
                 <div class="action-icon" aria-hidden="true">⌕</div>
-
                 <div class="action-content">
                     <h2>Perdi um objeto</h2>
-
-                    <p>
-                        Pesquise entre os itens encontrados
-                        no Instituto Federal.
-                    </p>
-
-                    <button
-                        type="button"
-                        onclick="document.getElementById('objetos').scrollIntoView({behavior:'smooth'})"
-                    >
-                        Pesquisar objetos →
-                    </button>
+                    <p>Pesquise entre os itens encontrados no Instituto Federal.</p>
+                    <button type="button" onclick="document.getElementById('objetos').scrollIntoView({behavior:'smooth'})">Pesquisar objetos →</button>
                 </div>
             </article>
-
             <article class="action-card found">
                 <div class="action-icon" aria-hidden="true">📦</div>
-
                 <div class="action-content">
                     <h2>Encontrei um objeto</h2>
-
-                    <p>
-                        Cadastre objetos encontrados para
-                        que eles possam ser devolvidos.
-                    </p>
-
-                    <a
-                        href="../cadastro_objeto/cadastro_objeto.html"
-                        class="btn-cadastrar"
-                    >
-                        Cadastrar objeto →
-                    </a>
+                    <p>Cadastre objetos encontrados para que eles possam ser devolvidos.</p>
+                    <a href="../cadastro_objeto/cadastro_objeto.html" class="btn-cadastrar">Cadastrar objeto →</a>
                 </div>
             </article>
-
         </section>
 
-        <!-- OBJETOS RECENTES -->
+        <!-- OBJETOS RECENTES CARREGADOS DA API -->
         <section class="recent" id="objetos">
-
             <div class="section-heading">
                 <h2>Objetos encontrados recentemente</h2>
-
-                <a href="../todos_objetos/todos_objetos.html">
-                    Ver todos os objetos →
-                </a>
+                <a href="../todos_objetos/todos_objetos.html">Ver todos os objetos →</a>
             </div>
-
-            <div class="objects-grid">
-
-                <!-- ESTOJO -->
-                <article class="object-card">
-                    <img
-                        class="imagem"
-                        src="../todos_objetos/img/estojo_azul.png"
-                        alt="Estojo azul"
-                        loading="lazy"
-                    >
-
-                    <h3>Estojo azul</h3>
-
-                    <p>▣ &nbsp;07/10/2026</p>
-                    <p>⌖ &nbsp;Biblioteca</p>
-                    <p>👤 &nbsp;Postado por: @GU3079689</p>
-
-                    <a href="../todos_objetos/detalhes_objetos.html?id=1" class='cartao'>Ver detalhes →</a>
-                </article>
-
-                <!-- GARRAFA -->
-                <article class="object-card">
-                    <img
-                        class="imagem"
-                        src="../todos_objetos/img/garrafa_preta.png"
-                        alt="Garrafa preta"
-                        loading="lazy"
-                    >
-
-                    <h3>Garrafa preta</h3>
-
-                    <p>▣ &nbsp;06/10/2026</p>
-                    <p>⌖ &nbsp;Sala F1</p>
-                    <p>👤 &nbsp;Postado por: @GU3079689</p>
-
-                    <a href="../todos_objetos/detalhes_objetos.html?id=2" class='cartao'>Ver detalhes →</a>
-                    
-                </article>
-
-                <!-- FONE -->
-                <article class="object-card">
-                    <img
-                        class="imagem"
-                        src="../todos_objetos/img/fone_jbl.png"
-                        alt="Fone de ouvido JBL"
-                        loading="lazy"
-                    >
-
-                    <h3>Fone de ouvido JBL</h3>
-
-                    <p>▣ &nbsp;05/10/2026</p>
-                    <p>⌖ &nbsp;Laboratório de Informática</p>
-                    <p>👤 &nbsp;Postado por: @3079689</p>
-
-                    <a href="../todos_objetos/detalhes_objetos.html?id=3" class='cartao'>Ver detalhes →</a>
-                    
-                </article>
-
-                <!-- ACESSO A TODOS OS OBJETOS -->
+            <div class="objects-grid" id="recentObjectsGrid" aria-live="polite" aria-busy="true">
+                <div class="objects-loading" role="status">Carregando os objetos mais recentes...</div>
                 <article class="object-card more-card">
                     <div class="plus" aria-hidden="true">+</div>
-
                     <h3>Ver mais objetos</h3>
-
-                    <p>
-                        Acesse todos os objetos encontrados
-                        no campus.
-                    </p>
-
-                    <a
-                        href="../todos_objetos/todos_objetos.html"
-                        class="more-button"
-                    >
-                        Ver todos →
-                    </a>
+                    <p>Acesse todos os objetos encontrados no campus.</p>
+                    <a href="../todos_objetos/todos_objetos.html" class="more-button">Ver todos →</a>
                 </article>
-
             </div>
         </section>
-
     </main>
 
     <!-- RODAPÉ -->
     <footer id="sobre">
         <div class="footer-content">
-
             <a class="brand footer-brand" href="#">
                 <div class="ifsp-mark" aria-hidden="true">
-                    <span class="dot"></span>
+                    <span class="dot"></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
                     <span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                    <span></span><span></span><span></span>
-                    <span></span><span></span>
                 </div>
-
-                <div class="brand-text">
-                    <strong>INSTITUTO<br>FEDERAL</strong>
-                    <small>São Paulo</small>
-                </div>
+                <div class="brand-text"><strong>INSTITUTO<br>FEDERAL</strong><small>São Paulo</small></div>
             </a>
-
-            <p>
-                Desenvolvido por Allan, estudante de ADS
-                do Instituto Federal de São Paulo.
-            </p>
-
-            <nav aria-label="Navegação do rodapé">
-                <a href="#">Início</a>
-                <a href="#objetos">Objetos</a>
-                <a href="#sobre">Sobre</a>
-            </nav>
-
+            <p>Desenvolvido por Allan, estudante de ADS do Instituto Federal de São Paulo.</p>
+            <nav aria-label="Navegação do rodapé"><a href="#">Início</a><a href="#objetos">Objetos</a><a href="#sobre">Sobre</a></nav>
         </div>
     </footer>
-
     <script src="js/pagina_inicial.js"></script>
     <script src="../js/remover_cartoes.js"></script>
-
 </body>
 </html>
