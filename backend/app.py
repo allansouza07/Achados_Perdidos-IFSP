@@ -13,8 +13,6 @@ from routes.objetos import objetos_bp
 PROJECT_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..")
 )
-
-
 def create_app():
     app = Flask(__name__)
     
