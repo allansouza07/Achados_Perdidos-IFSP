@@ -1,11 +1,13 @@
 import base64
 import binascii
+import os
 import re
 import uuid
 from pathlib import Path
 
 from flask import Blueprint, current_app, request, send_from_directory, url_for
 from mysql.connector import Error, IntegrityError
+from itsdangerous import URLSafeTimedSerializer
 
 from config.database import get_connection
 from utils.responses import error_response, not_found_response
@@ -95,12 +97,18 @@ def criar_usuario():
     telefone = re.sub(r"\D", "", str(data.get("telefone", "")))
     foto_data = data.get("foto")
 
+    admin_matricula = os.getenv("ADMIN_MATRICULA", "").strip().upper()
+    is_admin = bool(admin_matricula and matricula == admin_matricula)
+    admin_secret = os.getenv("ADMIN_SESSION_SECRET", "").strip()
+    if is_admin and not admin_secret:
+        return error_response("Acesso administrativo não configurado no servidor.", 503)
+
     if not matricula or not nome or not telefone:
         return error_response("Nome, matrícula e telefone são obrigatórios.")
     if len(nome) < 2 or len(nome) > 100:
         return error_response("O nome deve ter entre 2 e 100 caracteres.")
-    if not re.fullmatch(r"[A-Z0-9]{9}", matricula):
-        return error_response("A matrícula deve conter 9 letras ou números.")
+    if not is_admin and not re.fullmatch(r"[A-Z0-9]{9}", matricula):
+        return error_response("A matrícula deve conter 9 caracteres alfanuméricos, exceto a matrícula administrativa configurada.")
     if len(telefone) not in (10, 11):
         return error_response("Informe um telefone válido com DDD.")
     if not isinstance(foto_data, str) or not foto_data:
@@ -196,6 +204,16 @@ def criar_usuario():
             mensagem = "Cadastro realizado com sucesso."
             status_http = 201
 
+        admin_token = None
+        if is_admin:
+            serializer = URLSafeTimedSerializer(
+                admin_secret, salt="achados-ifsp-admin"
+            )
+            admin_token = serializer.dumps({
+                "user_id": int(id_usuario),
+                "role": "admin",
+            })
+
         return {
             "mensagem": mensagem,
             "usuario": {
@@ -204,6 +222,8 @@ def criar_usuario():
                 "NOME_USUARIO": nome,
                 "TELEFONE": telefone,
                 "FOTO": filename,
+                "is_admin": is_admin,
+                "admin_token": admin_token,
                 "foto_url": url_for(
                     "usuarios.foto_usuario",
                     nome_arquivo=filename,
@@ -219,6 +239,15 @@ def criar_usuario():
         )
         conn.commit()
         user_id = cursor.lastrowid
+        admin_token = None
+        if is_admin:
+            serializer = URLSafeTimedSerializer(
+                admin_secret, salt="achados-ifsp-admin"
+            )
+            admin_token = serializer.dumps({
+                "user_id": int(user_id),
+                "role": "admin",
+            })
         return {
             "mensagem": "Cadastro realizado com sucesso.",
             "usuario": {
@@ -227,6 +256,8 @@ def criar_usuario():
                 "NOME_USUARIO": nome,
                 "TELEFONE": telefone,
                 "FOTO": filename,
+                "is_admin": is_admin,
+                "admin_token": admin_token,
                 "foto_url": url_for(
                     "usuarios.foto_usuario",
                     nome_arquivo=filename,

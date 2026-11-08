@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     try { currentUser = JSON.parse(sessionStorage.getItem("usuarioAchadosPerdidos") || "null"); }
     catch (_) { currentUser = null; }
     const currentUserId = currentUser && Number(currentUser.IDUSUARIO ?? currentUser.id_usuario ?? currentUser.id);
+    const adminToken = currentUser?.admin_token || "";
+    const isAdmin = Boolean(currentUser?.is_admin && adminToken);
 
     const staticObjects = {
         "estojo-azul": { name: "Estojo azul", image: "img/estojo_azul.png", local: "Biblioteca", date: "07/10/2026", user: "@GU3079689", description: "Estojo azul encontrado na biblioteca." },
@@ -115,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Exibição do botão é somente conveniência; cada endpoint verifica o autor no banco.
         const ownerId = Number(obj.ID_USUARIO ?? obj.id_usuario);
-        if (ownerControls && currentUserId && ownerId === currentUserId) {
+        if (ownerControls && currentUserId && (ownerId === currentUserId || isAdmin)) {
             ownerControls.hidden = false;
             toggleStatusButton.textContent = currentStatus === "ATIVO" ? "Marcar como resolvido" : "Reativar objeto";
         }
@@ -129,7 +131,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             const response = await fetch(url, {
                 method,
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({ ...payload, ...(isAdmin ? { admin_token: adminToken } : {}) }),
                 cache: "no-store"
             });
             const result = await response.json().catch(() => ({}));

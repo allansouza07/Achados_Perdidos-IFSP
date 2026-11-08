@@ -13,6 +13,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Os cards fixos no HTML são somente fallback offline. Em resposta normal da API,
     // renderizamos exclusivamente o banco para que objetos excluídos não reapareçam.
     const legacyCards = [...grid.querySelectorAll(".object-card")].map(card => card.cloneNode(true));
+    let currentUser = null;
+    try { currentUser = JSON.parse(sessionStorage.getItem("usuarioAchadosPerdidos") || "null"); }
+    catch (_) { currentUser = null; }
+    const currentUserId = Number(currentUser?.IDUSUARIO ?? currentUser?.id_usuario ?? currentUser?.id);
+    const adminToken = currentUser?.admin_token || "";
+    const isAdmin = Boolean(currentUser?.is_admin && adminToken && currentUserId);
+    if (isAdmin) {
+        const header = document.querySelector(".page-header");
+        if (header) {
+            const banner = document.createElement("div");
+            banner.className = "admin-banner";
+            banner.textContent = "Modo administrador ativo — você pode gerenciar todos os objetos.";
+            header.appendChild(banner);
+        }
+    }
+
+    async function adminRequest(url, method, payload) {
+        const response = await fetch(url, {
+            method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...payload, id_usuario: currentUserId, admin_token: adminToken }),
+            cache: "no-store"
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.erro || result.mensagem || "Não foi possível concluir a ação.");
+        return result;
+    }
 
     function addImageFallback(img, name) {
         const normalizedName = normalize(name);
@@ -39,7 +66,45 @@ document.addEventListener("DOMContentLoaded", async () => {
             const card = document.createElement("article"); card.className = "object-card"; card.dataset.name = normalize(name); card.dataset.category = categoryKey(category); card.dataset.location = locationKey(local);
             const image = imgUrl ? `<img class="imagem" src="${esc(imgUrl)}" alt="Foto de ${esc(name)}" loading="lazy">` : `<div class="imagem sem-imagem" role="img" aria-label="Foto não disponível">📦</div>`;
             card.innerHTML = `<div class="image-container">${image}<span class="status">${status}</span></div><div class="object-content"><h2>${esc(name)}</h2><p><strong>📅</strong> ${esc(date)}</p><p><strong>📍</strong> ${esc(local)}</p><p><strong>👤</strong> Publicado por: ${esc(obj.NOME_USUARIO || obj.usuario || "Usuário do IFSP")}</p><a href="./detalhes_objetos.html?id=${encodeURIComponent(id)}" class="cartao">Ver detalhes →</a></div>`;
-            const img = card.querySelector("img.imagem"); if (img) addImageFallback(img, name); grid.appendChild(card);
+            const img = card.querySelector("img.imagem"); if (img) addImageFallback(img, name);
+            grid.appendChild(card);
+            if (isAdmin) {
+                const actions = document.createElement("div");
+                actions.className = "admin-actions";
+                const statusButton = document.createElement("button");
+                statusButton.type = "button";
+                statusButton.textContent = statusRaw === "ATIVO" ? "Marcar resolvido" : "Reativar";
+                const deleteButton = document.createElement("button");
+                deleteButton.type = "button";
+                deleteButton.className = "admin-delete";
+                deleteButton.textContent = "Excluir objeto";
+                statusButton.addEventListener("click", async () => {
+                    statusButton.disabled = deleteButton.disabled = true;
+                    try {
+                        await adminRequest(`${API}/api/objetos/${encodeURIComponent(id)}/status`, "PATCH", {
+                            status: statusRaw === "ATIVO" ? "RESOLVIDO" : "ATIVO"
+                        });
+                        window.location.reload();
+                    } catch (error) {
+                        window.alert(error.message);
+                        statusButton.disabled = deleteButton.disabled = false;
+                    }
+                });
+                deleteButton.addEventListener("click", async () => {
+                    if (!window.confirm(`Tem certeza de que deseja excluir "${name}"? Essa ação não pode ser desfeita.`)) return;
+                    statusButton.disabled = deleteButton.disabled = true;
+                    try {
+                        await adminRequest(`${API}/api/objetos/${encodeURIComponent(id)}`, "DELETE", {});
+                        card.remove();
+                        filter();
+                    } catch (error) {
+                        window.alert(error.message);
+                        statusButton.disabled = deleteButton.disabled = false;
+                    }
+                });
+                actions.append(statusButton, deleteButton);
+                card.querySelector(".object-content").appendChild(actions);
+            }
         });
     }
     function filter() {

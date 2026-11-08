@@ -108,8 +108,8 @@ document.addEventListener("DOMContentLoaded", function () {
             nomeError.textContent = "Digite seu nome completo.";
             valid = false;
         }
-        if (!/^[A-Z0-9]{9}$/.test(matriculaValue)) {
-            matriculaError.textContent = "A matrícula deve conter 9 letras ou números.";
+        if (!/^(?:[A-Z0-9]{9}|\d{7})$/.test(matriculaValue)) {
+            matriculaError.textContent = "Informe uma matrícula válida.";
             valid = false;
         }
         if (telefoneValue.length < 10 || telefoneValue.length > 11) {
@@ -149,7 +149,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 matricula: savedUser.MATRICULA,
                 telefone: savedUser.TELEFONE,
                 foto: savedUser.foto_url,
-                fotoNome: savedUser.FOTO
+                fotoNome: savedUser.FOTO,
+                is_admin: Boolean(savedUser.is_admin),
+                admin_token: savedUser.admin_token || null
             }));
             window.location.href = "frontend/pagina_inicial/pagina_inicial.html";
         } catch (error) {

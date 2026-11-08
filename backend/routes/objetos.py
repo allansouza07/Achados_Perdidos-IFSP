@@ -1,5 +1,6 @@
 import base64
 import binascii
+import os
 import re
 import uuid
 from datetime import date
@@ -7,6 +8,7 @@ from pathlib import Path
 
 from flask import Blueprint, current_app, request, url_for, send_from_directory
 from mysql.connector import Error
+from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
 
 from config.database import get_connection
 from utils.responses import error_response, not_found_response
@@ -50,6 +52,22 @@ def parse_user_id(data):
     except (TypeError, ValueError):
         return None
 
+
+def is_admin_request(data, id_usuario):
+    """Valida o token administrativo assinado pelo backend (12 horas)."""
+    token = str(data.get("admin_token", "")).strip()
+    secret = os.getenv("ADMIN_SESSION_SECRET", "").strip()
+    if not token or not secret:
+        return False
+    serializer = URLSafeTimedSerializer(secret, salt="achados-ifsp-admin")
+    try:
+        payload = serializer.loads(token, max_age=43200)
+    except (BadSignature, SignatureExpired, TypeError, ValueError):
+        return False
+    return (
+        payload.get("role") == "admin"
+        and str(payload.get("user_id")) == str(id_usuario)
+    )
 
 def delete_uploaded_file(filename):
     """Remove apenas um arquivo cujo nome seja um basename, nunca um caminho arbitrário."""
@@ -133,12 +151,19 @@ def atualizar_status(id_objeto):
         row = cursor.fetchone()
         if not row:
             return not_found_response("Ocorrência")
-        if int(row["ID_USUARIO"]) != id_usuario:
-            return error_response("Somente quem cadastrou este objeto pode alterar seu status.", 403)
-        cursor.execute(
-            "UPDATE OCORRENCIA SET STATUS = %s WHERE IDOCORRENCIA = %s AND ID_USUARIO = %s",
-            (status, row["IDOCORRENCIA"], id_usuario),
-        )
+        is_admin = is_admin_request(data, id_usuario)
+        if int(row["ID_USUARIO"]) != id_usuario and not is_admin:
+            return error_response("Somente quem cadastrou este objeto ou um administrador pode alterar seu status.", 403)
+        if is_admin:
+            cursor.execute(
+                "UPDATE OCORRENCIA SET STATUS = %s WHERE IDOCORRENCIA = %s",
+                (status, row["IDOCORRENCIA"]),
+            )
+        else:
+            cursor.execute(
+                "UPDATE OCORRENCIA SET STATUS = %s WHERE IDOCORRENCIA = %s AND ID_USUARIO = %s",
+                (status, row["IDOCORRENCIA"], id_usuario),
+            )
         if cursor.rowcount != 1:
             conn.rollback()
             return error_response("Não foi possível confirmar a autoria do objeto.", 403)
@@ -178,14 +203,21 @@ def excluir_objeto(id_objeto):
         row = cursor.fetchone()
         if not row:
             return not_found_response("Objeto")
-        if int(row["ID_USUARIO"]) != id_usuario:
-            return error_response("Somente quem cadastrou este objeto pode excluí-lo.", 403)
+        is_admin = is_admin_request(data, id_usuario)
+        if int(row["ID_USUARIO"]) != id_usuario and not is_admin:
+            return error_response("Somente quem cadastrou este objeto ou um administrador pode excluí-lo.", 403)
 
         image_filename = row.get("FOTO_OBJETO")
-        cursor.execute(
-            "DELETE FROM OCORRENCIA WHERE IDOCORRENCIA = %s AND ID_USUARIO = %s",
-            (row["IDOCORRENCIA"], id_usuario),
-        )
+        if is_admin:
+            cursor.execute(
+                "DELETE FROM OCORRENCIA WHERE IDOCORRENCIA = %s",
+                (row["IDOCORRENCIA"],),
+            )
+        else:
+            cursor.execute(
+                "DELETE FROM OCORRENCIA WHERE IDOCORRENCIA = %s AND ID_USUARIO = %s",
+                (row["IDOCORRENCIA"], id_usuario),
+            )
         if cursor.rowcount != 1:
             conn.rollback()
             return error_response("Não foi possível confirmar a autoria do objeto.", 403)
